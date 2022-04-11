@@ -1,6 +1,7 @@
 # Configuration files
 
-> Ansible supports several sources for configuring its behavior, including an ini file named ansible.cfg, environment variables, command-line options, playbook keywords, and variables. See Controlling how Ansible behaves: precedence rules for details on the relative precedence of each source. [^configuration]
+> Ansible supports several sources for configuring its behavior, including an ini file named ansible.cfg, environment variables, command-line options, playbook keywords, and variables. See Controlling how Ansible behaves: precedence rules for details on the relative precedence of each source. 
+[^configuration]
 
 ---
 
@@ -29,18 +30,18 @@
 1. Populate the [defaults] and [escalation_privileges], at a minimum, in the [ansible.cfg](ansible.cfg) file.
 
 * [defaults]
-	* ~~remote_user~~ - user to be logged into on remote host
-	* ~~inventory~~ - inventory file
-	* ~~host_key_checking~~ - whether to check ssh keys
-	* ~~ask_pass~~ - whether playbook should prompt for a login password
-	* ~~stdout_callback~~ - configure ansible output
-	* ~~deprecation_warnings~~ - toggle deprecation warnings
+	* remote_user - user to be logged into on remote host
+	* inventory - inventory file
+	* host_key_checking - whether to check ssh keys
+	* ask_pass - whether playbook should prompt for a login password
+	* stdout_callback - configure ansible output
+	* deprecation_warnings - toggle deprecation warnings
 
 * [escalation_privileges]
-	* ~~become~~ - allows changing users after login
-	* ~~become_user~~ - user to become
-	* ~~become_method~~ - how privilege escalation is accomplished
-	* ~~become_ask_pass~~ - toggle prompt for privilege escalation password
+	* become - allows changing users after login
+	* become_user - user to become
+	* become_method - how privilege escalation is accomplished
+	* become_ask_pass - toggle prompt for privilege escalation password
 
 
 ---
