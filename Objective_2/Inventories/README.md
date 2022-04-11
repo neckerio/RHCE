@@ -47,17 +47,20 @@ nmap -Pn -p 22 192.168.56.0/24 --open -oG - | awk '/Status/{ print $2 }' | tee i
 
 2. Edit IPs in **inventory** into Ansible Groups using the appropriate format
 
+```zsh
 [groupname1]
+ip.add.re.ss
 
 ip.add.re.ss
-ip.add.re.ss
+
 ip.add.re.ss
 
 
 [grouname2]
+ip.add.re.ss
 
 ip.add.re.ss
-ip.add.re.ss
+```
 
 
 3. Add vars
