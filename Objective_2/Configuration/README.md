@@ -1,7 +1,6 @@
 # Configuration files
 
-> Ansible supports several sources for configuring its behavior, including an ini file named ansible.cfg, environment variables, command-line options, playbook keywords, and variables. See Controlling how Ansible behaves: precedence rules for details on the relative precedence of each source. 
-[^configuration]
+> Ansible supports several sources for configuring its behavior, including an ini file named ansible.cfg, environment variables, command-line options, playbook keywords, and variables. See Controlling how Ansible behaves: precedence rules for details on the relative precedence of each source. [^configuration]
 
 ---
 
@@ -45,4 +44,4 @@
 
 
 ---
-[^configuration] quote from [Ansible Docs](https://docs.ansible.com/ansible/latest/reference_appendices/config.html)
+[^configuration]: quote from [Ansible Docs](https://docs.ansible.com/ansible/latest/reference_appendices/config.html)
