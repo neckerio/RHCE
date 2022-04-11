@@ -1,9 +1,4 @@
 # RHCE
-<<<<<<< HEAD
-RHCE notes as of 10/04/2022
-=======
-RHCE objectives as of 10/04/2022
-
 from [redhat](https://www.redhat.com/en/services/training/ex294-red-hat-certified-engineer-rhce-exam-red-hat-enterprise-linux-8)
 1. Be able to perform all tasks expected of a Red Hat Certified System Administrator
 	* Understand and use essential tools
@@ -68,4 +63,3 @@ from [redhat](https://www.redhat.com/en/services/training/ex294-red-hat-certifie
 	* Use Ansible Vault in playbooks to protect sensitive data
 
 ## As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.
->>>>>>> f3abd30 (Revert "Added RHCE objectives, just used number and *'s. We'll see if more is")
