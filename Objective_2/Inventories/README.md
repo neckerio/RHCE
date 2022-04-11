@@ -16,7 +16,7 @@
 
 
 ### Useful Packages
-- nmap
+* nmap
 
 ### Useful Directories/Files
 * /etc/ansible/hosts == Default inventory location
@@ -31,11 +31,11 @@
 nmap -Pn -p 22 192.168.56.0/24 --open -oG - | awk '/Status/{ print $2 }' | tee inventory
 ```
 - What this command means:
-	- nmap == network exploration tool and security / port scanner
-	- -Pn  ==  treat all hosts as online (skip host discover). For speed
-	- -p 22 ==  port 22
-	- 192.168.56.0/24 - scan this ip (change to your IP)
-	- --open ==  only show open ports
+	- **nmap** - network exploration tool and security / port scanner
+	- **-Pn** - treat all hosts as online (skip host discover). For speed
+	- **-p 22** - port 22
+	- **192.168.56.0/24** - scan this IP
+	- --open - only show open ports
 	- -oG ==  greppable output
 	- "-" ==  set the ouput/filespec (not exactly sure)
 	- | == pipe into...
@@ -45,31 +45,24 @@ nmap -Pn -p 22 192.168.56.0/24 --open -oG - | awk '/Status/{ print $2 }' | tee i
 	- tee == read from stdin and write to stdout and files
 	- inventory == the name of the INVENTORY file
 
-2. Edit IPs in "inventory" into Ansible Groups using the appropriate format
+2. Edit IPs in **inventory** into Ansible Groups using the appropriate format
 
 [groupname1]
-
 ip.add.re.ss
-
 ip.add.re.ss
-
 ip.add.re.ss
 
 
 [grouname2]
-
 ip.add.re.ss
-
 ip.add.re.ss
 
 
 3. Add vars
-	- Although it is a deprecated practice to add vars into the inventory file it might be quicker during the exam.
+	- Although it is a deprecated practice to add vars into the **inventory** file it might be quicker during the exam.
 
 [groupname1:vars]
-
 ansible_python_interpreter = /usr/bin/python3
-
 ansible_ssh_private_key_file = /path/to/ssh_private_key
 
 
@@ -82,7 +75,7 @@ mkdir group_vars
 ```zsh
 vim group_vars/groupname1
 ```
-	* when adding vars in group_vars/host_vars be sure to use ":" as delimeter instead of "=".
+* when adding vars in group_vars/host_vars be sure to use ***:*** as delimeter instead of ***=***.
 
 
 
