@@ -25,7 +25,7 @@
 
 ### Walkthrough
 
-1. Gather IPs of and place them in a file named "inventory"
+1. Gather IPs of and place them in a file named **inventory**
 
 ```zsh
 nmap -Pn -p 22 192.168.56.0/24 --open -oG - | awk '/Status/{ print $2 }' | tee inventory
@@ -61,7 +61,7 @@ mkdir group_vars
 ```zsh
 vim group_vars/groupname1
 ```
-* when adding vars in group_vars/host_vars be sure to use ***:*** as delimeter instead of ***=***.
+* when adding vars in ***group_vars/host_vars*** be sure to use ***:*** as delimeter instead of ***=***.
 
 
 
