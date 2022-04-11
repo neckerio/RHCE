@@ -4,7 +4,6 @@
 
 ---
 
-
 ## Objective
 - Understand the core componenets of Ansible
 	- Inventories
@@ -20,7 +19,7 @@
 * nmap
 
 ### Useful Directories/Files
-* /etc/ansible/hosts == Default inventory location
+* **/etc/ansible/hosts** - Default inventory location
 
 ---
 
@@ -36,15 +35,15 @@ nmap -Pn -p 22 192.168.56.0/24 --open -oG - | awk '/Status/{ print $2 }' | tee i
 	- **-Pn** - treat all hosts as online (skip host discover). For speed
 	- **-p 22** - port 22
 	- **192.168.56.0/24** - scan this IP
-	- --open - only show open ports
-	- -oG ==  greppable output
-	- "-" ==  set the ouput/filespec (not exactly sure)
-	- | == pipe into...
-	- awk == pattern scanning and processing language
-	- '/Status/{ print $2 }' == scan for Status and print the second column
-	- | == pipe into...
-	- tee == read from stdin and write to stdout and files
-	- inventory == the name of the INVENTORY file
+	- **--open** - only show open ports
+	- **-oG** - greppable output
+	- **-** - set the ouput/filespec (not exactly sure)
+	- **|** pipe into
+	- **awk** - pattern scanning and processing language
+	- **'/Status/{ print $2 }'** - scan for Status and print the second column
+	- **|** - pipe into
+	- **tee** - read from stdin and write to stdout and files
+	- **inventory** - the name of the INVENTORY file
 
 2. Edit IPs in **inventory** into Ansible Groups using the appropriate format
 
