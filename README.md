@@ -22,9 +22,9 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	
 3. Install and configure an Ansible control node
 	- [ ] Install required packages
-	- [ ] Create a static host inventory file
+	- [x] [Create a static host inventory file](Objective_2/Inventories)
 	- [ ] Create a configuration file
-	- [ ] Create and use static inventories to define groups of hosts
+	- [x] [Create and use static inventories to define groups of hosts](Objective_2/Inventories)
 	- [ ] Manage parallelism
 	
 4. Configure Ansible managed nodes
