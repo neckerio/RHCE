@@ -11,7 +11,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [ ] Manage security
 
 2. Understand core components of Ansible
-	- [ ] Inventories
+	- [x] [Inventories](Objective_2/Inventories)
 	- [ ] Modules
 	- [ ] Variables
 	- [ ] Facts
