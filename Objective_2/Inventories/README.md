@@ -45,30 +45,11 @@ nmap -Pn -p 22 192.168.56.0/24 --open -oG - | awk '/Status/{ print $2 }' | tee i
 	- **tee** - read from stdin and write to stdout and files
 	- **inventory** - the name of the INVENTORY file
 
-2. Edit IPs in **inventory** into Ansible Groups using the appropriate format
-
-```zsh
-[groupname1]
-ip.add.re.ss
-
-ip.add.re.ss
-
-ip.add.re.ss
+2. Edit IPs in [inventory](inventory) into Ansible Groups using the appropriate format
 
 
-[grouname2]
-ip.add.re.ss
-
-ip.add.re.ss
-```
-
-
-3. Add vars
+3. Add vars inside [inventory](inventory)
 	- Although it is a deprecated practice to add vars into the **inventory** file it might be quicker during the exam.
-
-[groupname1:vars]
-ansible_python_interpreter = /usr/bin/python3
-ansible_ssh_private_key_file = /path/to/ssh_private_key
 
 
 4. Alternative way to add vars
@@ -81,27 +62,6 @@ mkdir group_vars
 vim group_vars/groupname1
 ```
 * when adding vars in group_vars/host_vars be sure to use ***:*** as delimeter instead of ***=***.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
