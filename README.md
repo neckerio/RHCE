@@ -1,6 +1,6 @@
 # RHCE
 
-Objectives from [redhat](https://www.redhat.com/en/services/training/ex294-red-hat-certified-engineer-rhce-exam-red-hat-enterprise-linux-8) [^note]
+Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-hat-certified-engineer-rhce-exam-red-hat-enterprise-linux-8) [^note]
 1. Be able to perform all tasks expected of a Red Hat Certified System Administrator
 	- [ ] Understand and use essential tools
 	- [ ] Operate running systems
