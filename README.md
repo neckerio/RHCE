@@ -17,13 +17,13 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [ ] Facts
 	- [ ] Plays
 	- [ ] Playbooks
-	- [ ] Configuration files
+	- [x] [Configuration files](Objective_2/Configuration)
 	- [ ] Use provided documentation to look up specific information about Ansible modules and commands
 	
 3. Install and configure an Ansible control node
 	- [ ] Install required packages
 	- [x] [Create a static host inventory file](Objective_2/Inventories)
-	- [ ] Create a configuration file
+	- [x] [Create a configuration file](Objective_2/Configuration)
 	- [x] [Create and use static inventories to define groups of hosts](Objective_2/Inventories)
 	- [ ] Manage parallelism
 	
