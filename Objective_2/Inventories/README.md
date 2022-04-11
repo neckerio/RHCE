@@ -4,6 +4,7 @@
 
 ---
 
+
 ## Objective
 - Understand the core componenets of Ansible
 	- Inventories
