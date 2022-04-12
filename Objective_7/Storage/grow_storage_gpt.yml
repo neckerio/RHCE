@@ -1,0 +1,10 @@
+---
+- name: Testing growth capabilities on /dev/sdb previously configured by storage_gpt.yml
+  hosts: all
+  tasks:
+    - name: use lvol to grow lvdata to 300M
+      lvol:
+        vg: vgdata
+        lv: lvdata
+        size: 300M
+        resizefs: True

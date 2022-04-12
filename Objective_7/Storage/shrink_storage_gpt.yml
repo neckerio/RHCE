@@ -1,0 +1,25 @@
+---
+- name: Shrink logical volume created by storage_gpt.yml
+  hosts: all
+  tasks:
+    - name: first unmount lvdata
+      mount:
+        state: unmounted
+        src: /dev/vgdata/lvdata
+        path: /mnt
+
+    - name: shrink lvdata to 200M
+      lvol:
+        vg: vgdata
+        lv: lvdata
+        resizefs: True
+        size: 200M
+        force: True
+
+    - name: remount the shrunken volume
+      mount:
+        state: mounted
+        boot: True
+        src: /dev/vgdata/lvdata
+        path: /mnt
+        fstype: ext4
