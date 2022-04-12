@@ -3,19 +3,19 @@
     vg: vgone
     lv: lvone
     state: present
-    size: 250MiB
+    size: 250M
 
 - name: create second logical volume
   lvol:
     vg: vgtwo
     lv: lvtwo
     state: present
-    size: 300MiB
+    size: 300M
 
 - name: create third logical volume
   lvol:
     vg: vgthree
     lv: lvthree
     state: present
-    size: 400MiB
+    size: 400M
 

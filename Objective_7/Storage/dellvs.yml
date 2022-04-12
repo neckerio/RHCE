@@ -3,19 +3,22 @@
     vg: vgone
     lv: lvone
     state: absent
-    size: 250MiB
+    size: 250M
+    force: True
 
 - name: create second logical volume
   lvol:
     vg: vgtwo
     lv: lvtwo
     state: absent
-    size: 300MiB
+    size: 300M
+    force: True
 
 - name: create third logical volume
   lvol:
     vg: vgthree
     lv: lvthree
     state: absent
-    size: 400MiB
+    size: 400M
+    force: True
 

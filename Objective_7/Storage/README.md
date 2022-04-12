@@ -82,7 +82,9 @@
 1. **parted:** module's attribute **state:** is required.
 2. **parted:** module's attribute **flags:** is required for LVM.
 3. **parted:** module's attribute **label:msdos** requires some BUFFER space between the partitions.
+4. **lvg:**-module-created vgs can leave "legacy" vgs that auto-attach to newly created partitions that correspond to the "legacy" partition. Worthwhile to create a VG delete that can somehow handle this. 
 5. **lvol:** module's attribute **size:** only accepts K,M,G. NO ~~KiB,MiB,GiB~~
 6. **filesystem:** module's device path attribute is the ONLY one labeled **dev:**
 7. **XFS** filesytems can grow but they can't shrink. 
+8. **mount:** module's attribute **fstype:** required even for deletion.
 
