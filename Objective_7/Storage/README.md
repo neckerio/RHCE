@@ -79,7 +79,8 @@
 
 1. **parted:** module's attribute **state:** is required.
 2. **parted:** module's attribute **flags:** is required for LVM.
-3. **lvol:** module's attribute **size:** only accepts K,M,G. NO ~~KiB,MiB,GiB~~
-4. **filesystem:** module's device path attribute is the ONLY one labeled **dev:**
-5. **XFS** filesytems can grow but they can't shrink. 
+3. **parted:** module's attribute **label:msdos** requires some BUFFER space between the partitions.
+5. **lvol:** module's attribute **size:** only accepts K,M,G. NO ~~KiB,MiB,GiB~~
+6. **filesystem:** module's device path attribute is the ONLY one labeled **dev:**
+7. **XFS** filesytems can grow but they can't shrink. 
 

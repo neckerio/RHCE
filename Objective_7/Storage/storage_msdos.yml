@@ -1,0 +1,151 @@
+---
+- name: configure storage using msdos label; 3 primary 1 extended and many logical parts
+  hosts: all
+  tasks:
+    - name: primary parition one
+      parted:
+        state: present
+        device: /dev/sdb
+        number: 1
+        label: msdos
+        part_type: primary
+        part_start: 100MiB
+        part_end: 200MiB
+        flags: [ lvm ]
+
+    - name: primary parition two
+      parted:
+        state: present
+        device: /dev/sdb
+        number: 2
+        label: msdos
+        part_type: primary
+        part_start: 200MiB
+        part_end: 300MiB
+        flags: [ lvm ]
+
+    - name: primary parition three
+      parted:
+        state: present
+        device: /dev/sdb
+        number: 3
+        label: msdos
+        part_type: primary
+        part_start: 300MiB
+        part_end: 400MiB
+        flags: [ lvm ]
+
+    - name: extended partition 
+      parted:
+        state: present
+        device: /dev/sdb
+        number: 4
+        label: msdos
+        part_type: extended
+        part_start: 500MiB
+        part_end: 4094MiB
+
+    - name: logical partition five
+      parted: 
+        state: present
+        device: /dev/sdb
+        number: 5
+        label: msdos
+        part_type: logical
+        part_start: 510MiB
+        part_end: 600MiB
+
+    - name: logical partition six
+      parted: 
+        state: present
+        device: /dev/sdb
+        number: 6
+        label: msdos
+        part_type: logical
+        part_start: 610MiB
+        part_end: 700MiB
+
+    - name: logical partition seven
+      parted: 
+        state: present
+        device: /dev/sdb
+        number: 7
+        label: msdos
+        part_type: logical
+        part_start: 710MiB
+        part_end: 800MiB
+
+    - name: logical partition eight
+      parted: 
+        state: present
+        device: /dev/sdb
+        number: 8
+        label: msdos
+        part_type: logical
+        part_start: 810MiB
+        part_end: 900MiB
+
+    - name: logical partition nine
+      parted: 
+        state: present
+        device: /dev/sdb
+        number: 9
+        label: msdos
+        part_type: logical
+        part_start: 910MiB
+        part_end: 1GiB
+
+    - name: logical partition ten
+      parted: 
+        state: present
+        device: /dev/sdb
+        number: 10
+        label: msdos
+        part_type: logical
+        part_start: 1034MiB
+        part_end: 2000MiB
+
+    - name: logical partition eleven
+      parted: 
+        state: present
+        device: /dev/sdb
+        number: 11
+        label: msdos
+        part_type: logical
+        part_start: 2004MiB
+        part_end: 3000MiB
+
+    - name: logical partition twelve
+      parted: 
+        state: present
+        device: /dev/sdb
+        number: 12
+        label: msdos
+        part_type: logical
+        part_start: 3004MiB
+        part_end: 4048MiB
+
+    - name: import tasks to manage pvcreate and vgcreate
+      import_tasks: vgs.yml
+
+    - name: import tasks to manage lvcreate
+      import_tasks: lvs.yml
+
+    - name: manage mkfs
+      filesystem:
+        dev: /dev/vgone/lvone
+        fstype: ext4
+        state: present
+        opts: "-L labelone"
+
+    - name: manage mount
+      mount:
+        boot: True
+        path: /mnt/one
+        src: 'LABEL=labelone'
+        state: mounted
+
+- name: importing confirm.yml
+  import_playbook: confirm.yml
+
+

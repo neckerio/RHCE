@@ -1,0 +1,17 @@
+- name: create the first vg
+  lvg:
+    pvs: /dev/sdb1,/dev/sdb2,/dev/sdb11
+    vg: vgone
+    state: present
+
+- name: create second vg
+  lvg:
+    pvs: /dev/sdb3,/dev/sdb5,/dev/sdb6,/dev/sdb7,/dev/sdb12
+    vg: vgtwo
+    state: present
+
+- name: create third vg
+  lvg:
+    pvs: /dev/sdb8,/dev/sdb9,/dev/sdb10
+    vg: vgthree
+    state: present

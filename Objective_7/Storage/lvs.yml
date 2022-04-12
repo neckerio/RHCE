@@ -1,0 +1,21 @@
+- name: create the first logical volume
+  lvol:
+    vg: vgone
+    lv: lvone
+    state: present
+    size: 250MiB
+
+- name: create second logical volume
+  lvol:
+    vg: vgtwo
+    lv: lvtwo
+    state: present
+    size: 300MiB
+
+- name: create third logical volume
+  lvol:
+    vg: vgthree
+    lv: lvthree
+    state: present
+    size: 400MiB
+
