@@ -1,8 +1,8 @@
 ---
-- name: configuring LVM storage on a 4GiB device /dev/sdb using gpt. Mount with a Label
-	hosts: all
-	tasks:
-		- name: parted to create the first partition
+- name: configuring LVM storage on a 4GiB device /dev/sdb using gpt. Mount with a Label.
+  hosts: all
+  tasks:
+    - name: parted to create the first partition
       parted:
         label: gpt
         name: one
@@ -13,7 +13,7 @@
         part_end: 1GiB
         state: present
 
-		- name: parted to create the second partition
+    - name: parted to create the second partition
       parted:
         label: gpt
         name: two
@@ -36,7 +36,7 @@
         vg: vgdata
         pvs: /dev/sdb1,/dev/sdb2
         size: 300M
-		
+
     - name: manage mkfs
       filesystem:
         fstype: ext4
