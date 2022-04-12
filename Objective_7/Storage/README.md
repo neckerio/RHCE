@@ -5,7 +5,9 @@
 	* Storage devices
 
 ### Implementation
-* storage_gpt.yml
+* [storage_gpt.yml](storage_gpt.yml)
+* [delstorage_gpt.yml](delstorage_gpt.yml)
+* [confirm.yml](confirm.yml)
 
 ### Useful Modules
 * parted:
