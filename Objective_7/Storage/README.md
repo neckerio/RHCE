@@ -7,6 +7,8 @@
 ### Implementation
 * [storage_gpt.yml](storage_gpt.yml)
 * [delstorage_gpt.yml](delstorage_gpt.yml)
+* [storage_msdos.yml](storage_msdos.yml)
+* [delstorage_msdos.yml](delstorage_msdos.yml)
 * [confirm.yml](confirm.yml)
 
 ### Useful Modules
