@@ -1,0 +1,56 @@
+---
+- name: configuring LVM storage on a 4GiB device /dev/sdb using gpt. Mount with a Label
+	hosts: all
+	tasks:
+		- name: parted to create the first partition
+      parted:
+        label: gpt
+        name: one
+        number: 1
+        device: /dev/sdb
+        flags: [ lvm ]
+        part_start: 100MiB
+        part_end: 1GiB
+        state: present
+
+		- name: parted to create the second partition
+      parted:
+        label: gpt
+        name: two
+        number: 2
+        device: /dev/sdb
+        flags: [ lvm ]
+        part_start: 1GiB
+        part_end: 2GiB
+        state: present
+
+    - name: manage pvcreate and vgcreate
+      lvg:
+        pvs: /dev/sdb1,/dev/sdb2
+        vg: vgdata
+        state: present
+
+    - name: manage lvcreate
+      lvol:
+        lv: lvdata
+        vg: vgdata
+        pvs: /dev/sdb1,/dev/sdb2
+        size: 300M
+		
+    - name: manage mkfs
+      filesystem:
+        fstype: ext4
+        dev: /dev/vgdata/lvdata
+        state: present
+        opts: "-L mylabel"
+
+    - name: manage mount
+      mount:
+        boot: True
+        fstype: ext4
+        src: 'LABEL=mylabel'
+        path: /mnt
+        state: mounted
+
+- name: import confirm.yml playbook
+  import_playbook: confirm.yml

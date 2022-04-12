@@ -1,0 +1,29 @@
+- name: confirm pvs, vgs, lvs, lsblk and fstab to avoid annoying errors
+  hosts: all
+  tasks:
+    - name: pvs, vgs and lvs output for confirmation
+      shell:
+        cmd: 'pvs;vgs;lvs'
+      register: lvm
+
+    - name: debugging lvm
+      debug:
+        var: lvm.stdout
+
+    - name: lsblk output for confirmation
+      command:
+        cmd: 'lsblk'
+      register: lsblk
+
+    - name: debugging lsblk
+      debug:
+        var: lsblk.stdout
+
+    - name: cat /etc/fstab for confirmation
+      command:
+        cmd: 'cat /etc/fstab'
+      register: fstab
+
+    - name: debugging fstab
+      debug:
+        var: fstab.stdout

@@ -1,0 +1,47 @@
+---
+- name: Deleting everything done by storage_gpt.yml. Useful to revert to blank state.
+  hosts: all
+  tasks:
+    - name: unmount and remove from /etc/fstab
+      mount:
+        src: 'LABEL=mylabel'
+        state: absent
+        path: /mnt
+
+    - name: remove filesystem 
+      filesystem:
+        dev: /dev/vgdata/lvdata
+        fstype: ext4
+        state: absent
+        force: True
+
+    - name: remove logical volume
+      lvol:
+        lv: lvdata
+        vg: vgdata
+        state: absent
+        force: True
+
+    - name: remove volume group
+      lvg:
+        vg: vgdata
+        state: absent
+        force: True
+
+    - name: remove partition 2
+      parted:
+        state: absent
+        number: 2
+        device: /dev/sdb
+
+    - name: remove partition 1
+      parted:
+        state: absent
+        number: 1
+        device: /dev/sdb
+
+- name: import confirmation playbook
+  import_playbook: confirm.yml
+
+  
+
