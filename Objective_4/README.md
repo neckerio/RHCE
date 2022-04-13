@@ -90,7 +90,7 @@
 {{ 'vagrant' | password_hash('sha512','randomsalt') }} 
 	2. openssl
 
-```
+```zsh
 USER_PASSWORD=$(openssl passwd -6 vagrant)
 echo $USER_PASSWORD
 ansible all -m user -a "name=ansible password=$USER_PASSWORD"
