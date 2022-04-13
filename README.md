@@ -12,7 +12,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 
 2. Understand core components of Ansible
 	- [x] [Inventories](Objective_2/Inventories)
-	- [ ] Modules
+	- [x] [Modules](Objective_2/Modules)
 	- [ ] Variables
 	- [ ] Facts
 	- [ ] Plays
