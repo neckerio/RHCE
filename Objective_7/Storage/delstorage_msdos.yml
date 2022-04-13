@@ -2,24 +2,52 @@
 - name: REMOVE storage made using storage_msdos.yml
   hosts: all
   tasks:
-    - name: manage mount
+    - name: manage mount three
+      mount:
+        fstype: ext4
+        src: UUID="{{ ansible_facts['devices']['dm-4']['links']['uuids'][0] }}"
+        state: absent
+        path: /mnt/three
+
+    - name: manage mount two
       mount:
         fstype: ext4
         src: 'LABEL=labelone'
         state: absent
+        path: /mnt/two
+
+    - name: manage mount one
+      mount:
+        fstype: ext4
+        src: /dev/vgone/lvone
+        state: absent
         path: /mnt/one
           
-    - name: manage a mkfs
+    - name: remove filesystem on lvthree
+      filesystem:
+        dev: /dev/vgthree/lvthree
+        force: True
+        fstype: ext4
+        state: absent
+
+    - name: remove filesystem on lvtwo
+      filesystem:
+        dev: /dev/vgtwo/lvtwo
+        force: True
+        fstype: ext4
+        state: absent
+
+    - name: remove fileystem on lvone
       filesystem:
         dev: /dev/vgone/lvone
         force: True
         fstype: ext4
         state: absent
 
-    - name: set up lvs
+    - name: remove lvs
       import_tasks: dellvs.yml
 
-    - name: set up vgs 
+    - name: remove vgs 
       import_tasks: delvgs.yml
 
     - name: primary parition one

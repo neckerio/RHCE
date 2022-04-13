@@ -4,6 +4,7 @@
     lv: lvone
     state: present
     size: 250M
+    force: True
 
 - name: create second logical volume
   lvol:

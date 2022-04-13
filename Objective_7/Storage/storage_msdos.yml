@@ -131,18 +131,49 @@
     - name: import tasks to manage lvcreate
       import_tasks: lvs.yml
 
-    - name: manage mkfs
+    - name: manage mkfs for lvone
       filesystem:
         dev: /dev/vgone/lvone
         fstype: ext4
         state: present
         opts: "-L labelone"
 
-    - name: manage mount
+    - name: manage mkfs for lvtwo
+      filesystem:
+        dev: /dev/vgtwo/lvtwo
+        fstype: ext4
+        state: present
+
+    - name: manage mkfs for lvthree
+      filesystem:
+        dev: /dev/vgthree/lvthree
+        fstype: ext4
+        state: present
+
+- name: Second play to accomodate finnicky mounting with UUID
+  hosts: all
+  tasks:
+    - name: manage mount for lvone
       mount:
         boot: True
         path: /mnt/one
         src: 'LABEL=labelone'
+        state: mounted
+        fstype: ext4
+
+    - name: manage mount for lvtwo
+      mount:
+        boot: True
+        path: /mnt/two
+        src: /dev/vgtwo/lvtwo
+        state: mounted
+        fstype: ext4
+
+    - name: manage mount for lvthree
+      mount:
+        boot: True
+        path: /mnt/three
+        src: UUID="{{ ansible_facts['devices']['dm-4']['links']['uuids'][0] }}" 
         state: mounted
         fstype: ext4
 
