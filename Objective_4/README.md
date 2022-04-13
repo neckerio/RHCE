@@ -87,9 +87,7 @@
 ## Notes
 1. **user:** module's attribute **password:** can be accomplished in different ways. Examples below use the password _vagrant_ for consistency and clarity.
 	1. password_hash[^password_hash] filter option
-```
-"{{ 'vagrant' | password_hash('sha512','randomsalt') }}"
-```
+"\{{ 'vagrant' | password_hash('sha512','randomsalt')\ }}"
 	2. openssl
 ```
 USER_PASSWORD=$(openssl passwd -6 vagrant)
