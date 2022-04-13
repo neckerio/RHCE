@@ -85,25 +85,29 @@
 ---
 
 ## Notes
-1. **user:** module's attribute **password:** can be accomplished in different ways. Examples below use the password _vagrant_ for consistency and clarity.
+1. **user:** module's attribute **password:** can be accomplished in different ways. The three examples below use the password _vagrant_ for consistency and clarity.
 	1. password_hash filter option [^password_hash] 
 		- {{ 'vagrant' | password_hash('sha512','randomsalt') }} 
 	
 	2. openssl
 		- USER_PASSWORD=$(openssl passwd -6 vagrant)
-		- echo $USER_PASSWORD ansible all -m user -a "name=ansible password=$USER_PASSWORD"
+		- echo $USER_PASSWORD
+		- ansible all -m user -a "name=ansible password=$USER_PASSWORD"
 		- getent passwd
 		- sudo getent shadow
 
-
 	3. Quick and dirty shell command[^sander]
 		- echo vagrant | passwd ansible --stdin
+
 
 
 2. ***authorized_key:*** modue's attribute **key:** requires the use of a **lookup** plugin
 	1. The **lookup** plugin CAN'T read hidden files, this is why they are moved to the user's homedir in the playbook.
 	2. The SSH keys require secure permissions on the private key, public key and the directory they are in. This is why they are changed in the playbook.
 
+
+
 ---
+
 [^password_hash]: taken from [Ansible Docs](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#hash-filters) and [FAQ](https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module)
 [^sander]: taken from [Sander Van Vugt's Videos](https://www.oreilly.com/library/view/red-hat-certified/9780135987513/)
