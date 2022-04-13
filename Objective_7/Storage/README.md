@@ -95,4 +95,8 @@
 12. **mount:** module's attribute **src:** can accept a UUID, but note that:
 	1. It must be put in a separate Play otherwise it fails because device-mapper cant locate the UUID, I think. If it is in the same Play it will only work if run twice.
 	2. the color highlighting gets all screwed up when mounting with a UUID because of the placement of an _=_ next to _""_, but it still works.
+	3. Using a shell command works on the CMDLINE as an adhoc command, but when run in a playbook the output isn't displayed anywhere. ansible_facts work instead.
+```zsh
+blkid | awk '/lvthree{ print $2 }' | cut -d ' ' -f 2
+```
 
