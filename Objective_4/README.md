@@ -89,7 +89,7 @@
 	1. password_hash[^password_hash] filter option
 {{ 'vagrant' | password_hash('sha512','randomsalt') }} 
 	2. openssl
-
+Here is an example:
 ```zsh
 USER_PASSWORD=$(openssl passwd -6 vagrant)
 echo $USER_PASSWORD
