@@ -87,11 +87,11 @@
 ## Notes
 1. **user:** module's attribute **password:** can be accomplished in different ways. Examples below use the password _vagrant_ for consistency and clarity.
 	1. password_hash[^password_hash] filter option
-```zsh
+```
 "{{ 'vagrant' | password_hash('sha512','randomsalt') }}"
 ```
 	2. openssl
-```zsh
+```
 USER_PASSWORD=$(openssl passwd -6 vagrant)
 echo $USER_PASSWORD
 ansible all -m user -a "name=ansible password=$USER_PASSWORD"
@@ -99,7 +99,7 @@ getent passwd
 sudo getent shadow
 ```
 	3. Quick and dirty shell command[^sander]
-```zsh
+```
 echo vagrant | passwd ansible --stdin
 ```
 
