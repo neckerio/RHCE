@@ -28,9 +28,9 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [ ] Manage parallelism
 	
 4. Configure Ansible managed nodes
-	- [ ] Create and distribute SSH keys to managed nodes
-	- [ ] Configure privilege escalation on managed nodes
-	- [ ] Validate a working configuration using ad hoc Ansible commands
+	- [x] [Create and distribute SSH keys to managed nodes](Objective_4)
+	- [x] [Configure privilege escalation on managed nodes](Objective_4)
+	- [x] [Validate a working configuration using ad hoc Ansible commands](Objective_4)
 	
 5. Script administration tasks
 	- [ ] Create simple shell scripts

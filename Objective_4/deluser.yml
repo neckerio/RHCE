@@ -1,0 +1,15 @@
+---
+- name: deleting the user created with user.yml on Control and Remote Nodes
+  hosts: all, localhost
+  tasks:
+    - name: use userdel and force to completely remove user
+      user:
+        name: ansible
+        state: absent
+        force: True
+        remove: True
+
+    - name: remove sudo privileges by deleting file from /etc/sudoers.d/ as well
+      file:
+        state: absent
+        path: /etc/sudoers.d/ansible

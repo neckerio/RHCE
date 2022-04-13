@@ -1,0 +1,64 @@
+---
+- name: create user on Remote Nodes with "plaintext password option"
+  hosts: all
+  tasks:
+    - name: create the user
+      user: 
+        name: ansible
+        password: "{{ 'vagrant' | password_hash('sha512','randomsalt') }}"
+        shell: /bin/bash
+        state: present
+
+- name: create user on Control Node, generate sshkeys and handle file modes
+  hosts: localhost
+  tasks:
+    - name: create the user with "plaintext password option"
+      user:
+        name: ansible
+        password: "{{ 'vagrant' | password_hash('sha512','randomsalt') }}"
+        shell: /bin/bash
+        generate_ssh_key: True
+        ssh_key_comment: "from rhel1 -> rhel2/rhel3"
+        ssh_key_file: /home/ansible/id_rsa
+        state: present
+
+    - name: chmod user's homedir to be compatible with ssh_key requirements. IMPORTANT!
+      file:
+        path: /home/ansible
+        state: directory
+        mode: '0755'
+
+    - name: chmod generated public ssh_key to meet ssh requirements. IMPORTANT!
+      file:
+        path: /home/ansible/id_rsa.pub
+        state: touch
+        mode: '0644'
+
+    - name: chmod generated private ssh_key to meet ssh requirements. IMPORTANT!
+      file:
+        path: /home/ansible/id_rsa
+        state: touch
+        mode: '0600'
+
+
+- name: use "lookup" to transfer ssh keys to Remote Nodes
+  hosts: all
+  tasks:
+    - name: use "lookup", which doesn't work on hidden files, to transfer ssh_keys
+      authorized_key:
+        key: "{{ lookup('file', '/home/ansible/id_rsa.pub') }}"
+        user: ansible
+        state: present
+
+
+- name: give user sudo privileges on Control and Remote Nodes
+  hosts: all, localhost
+  tasks:
+    - name: set up file in /etc/sudoers.d/ to grant privileges to user
+      blockinfile:
+        state: present
+        block: "ansible ALL=(ALL)   NOPASSWD: ALL"
+        path: /etc/sudoers.d/ansible
+        create: True
+        validate: 'visudo -cf %s'
+        backup: True
