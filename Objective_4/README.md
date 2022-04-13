@@ -89,6 +89,8 @@
 	1. password_hash[^password_hash] filter option
 {{ 'vagrant' | password_hash('sha512','randomsalt') }} 
 	2. openssl
+
+```
 USER_PASSWORD=$(openssl passwd -6 vagrant)
 echo $USER_PASSWORD
 ansible all -m user -a "name=ansible password=$USER_PASSWORD"
@@ -96,6 +98,7 @@ getent passwd
 sudo getent shadow
 	3. Quick and dirty shell command[^sander]
 echo vagrant | passwd ansible --stdin
+```
 
 
 2. ***authorized_key:*** modue's attribute **key:** requires the use of a **lookup** plugin
