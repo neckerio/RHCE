@@ -1,0 +1,76 @@
+---
+- name: delete the changes made in delfirewall.yml
+  hosts: all
+  tasks:
+    - name: remove the interface from the trusted zone
+      firewalld:
+        zone: trusted
+        interface: enp0s8
+        state: disabled
+        permanent: True
+        immediate: True
+
+    - name: reopen the work zone
+      firewalld:
+        zone: work
+        state: enabled
+        permanent: True
+
+    - name: remove port 8080 from the default zone
+      firewalld:
+        port: "{{ item }}"
+        state: disabled
+        permanent: True
+        immediate: True
+      loop:
+        - 8080/tcp
+        - 8080/udp
+
+    - name: delete custom zone
+      firewalld:
+        zone: custom
+        state: absent
+        permanent: True
+
+    - name: remove mysql from external zone
+      firewalld:
+        zone: external
+        service: mysql
+        state: disabled
+        immediate: True
+        permanent: True
+
+    - name: remove ftp from home zone
+      firewalld:
+        zone: home
+        service: ftp
+        state: disabled
+        immediate: True
+        permanent: True
+
+    - name: remove NAT from home zone
+      firewalld:
+        zone: home
+        source: 192.168.5.0/24
+        state: disabled
+        immediate: True
+        permanent: True
+
+    - name: close http/https in default zone
+      firewalld:
+        service: "{{ item }}"
+        state: disabled
+        immediate: True
+        permanent: True
+      loop:
+        - http
+        - https
+
+    - name: listing zones for confirmation
+      command:
+        cmd: "firewall-cmd --list-all-zones"
+      register: firewall
+
+    - name: debugging
+      debug:
+        var: firewall.stdout

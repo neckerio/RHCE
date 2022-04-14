@@ -1,0 +1,92 @@
+---
+- name: A simple firewalld playbook to open up services
+  hosts: all
+  tasks:
+    - name: open http/https in default zone and make sure they are permanent
+      firewalld:
+        service: "{{ item }}"
+        state: enabled
+        immediate: True
+        permanent: True
+      loop:
+        - http
+        - https
+
+    - name: open NAT in home zone and make sure it is permanent
+      firewalld:
+        zone: home
+        source: 192.168.5.0/24
+        state: enabled
+        immediate: True
+        permanent: True
+
+    - name: open ftp in home zone and make sure it is permanent
+      firewalld:
+        zone: home
+        service: ftp
+        state: enabled
+        immediate: True
+        permanent: True
+
+    - name: open mysql in external zone and make sure it is permanent
+      firewalld:
+        zone: external
+        service: mysql
+        state: enabled
+        immediate: True
+        permanent: True
+
+    - name: create a custom zone
+      firewalld:
+        zone: custom
+        state: present
+        permanent: True
+
+    - name: open up port 8080 in default zone and make sure it is permanent
+      firewalld:
+        port: "{{ item }}"
+        state: enabled
+        permanent: True
+        immediate: True
+      loop:
+        - 8080/tcp
+        - 8080/udp
+
+    - name: close down a zone
+      firewalld:
+        zone: work
+        state: disabled
+        permanent: True
+
+    - name: place an interface in trusted zone
+      firewalld:
+        zone: trusted
+        interface: enp0s8
+        state: enabled
+        permanent: True
+        immediate: True
+
+    - name: restart firewalld
+      service:
+        name: firewalld
+        state: restarted
+
+- name: acting upon reloaded custom zone and listing output for confirmation
+  hosts: all
+  tasks:
+    - name: open up ssh in custom zone
+      firewalld:
+        zone: custom
+        service: ssh
+        state: enabled
+        immediate: True
+        permanent: True
+
+    - name: listing zones for confirmation
+      command:
+        cmd: "firewall-cmd --list-all-zones"
+      register: firewall
+
+    - name: debugging
+      debug:
+        var: firewall.stdout
