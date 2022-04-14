@@ -1,0 +1,19 @@
+---
+- name: remove the packages downloaded by system.yml
+  hosts: all
+  tasks:
+    - name: stop the services
+      service:
+        name: "{{ item }}"
+        state: stopped
+      loop:
+        - httpd
+        - vsftpd
+
+    - name: uninstall two packages
+      dnf:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - httpd
+        - vsftpd

@@ -1,0 +1,47 @@
+---
+- name: quick use of starting, restarting and reloading a service through a handler
+  hosts: all
+  tasks:
+    - name: download httpd and vsfptd
+      dnf:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - httpd
+        - vsftpd
+
+    - name: start and enable services
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: True
+      loop:
+        - httpd
+        - vsftpd
+
+    - name: touch /etc/httpd/conf/httpd.conf to trigger a change and run a handler
+      file:
+        state: touch
+        path: /etc/httpd/conf/httpd.conf
+      notify: restart
+
+    - name: touch /etc/vsftpd/vsftpd.conf to trigger a change and run a handler
+      file:
+        state: touch
+        path: /etc/vsftpd/vsftpd.conf
+      notify: reload
+
+  handlers:
+    - name: restart
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - httpd
+        - vsftpd
+    - name: reload
+      service:
+        name: "{{ item }}"
+        state: reloaded
+      loop:
+        - httpd

@@ -63,6 +63,22 @@
 	* opts: (options to pass to mount)
 	* dump: 0
 	* passno: 0 
+2. used in [Firewall management](../../Objective_7/Firewall)
+* Firewalld
+	* immediate: BOOL
+	* interface:
+	* permanent: BOOL
+	* port: (port/protocol)
+	* service:
+	* source: (network to add/remove)
+	* state:
+		* enable (setting/port)
+		* disable (setting/port)
+		* present (zones only)
+		* absent (zones only)
+	* target:
+	* zone: (public, block, dmz, drop, external, home, internal, trusted, work)
+
 
 
 
