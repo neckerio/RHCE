@@ -63,7 +63,7 @@
 	* opts: (options to pass to mount)
 	* dump: 0
 	* passno: 0 
-2. used in [Firewall management](../../Objective_7/Firewall)
+2. used in [Firewall Management](../../Objective_7/Firewall)
 * Firewalld
 	* immediate: BOOL
 	* interface:
@@ -78,6 +78,15 @@
 		* absent (zones only)
 	* target:
 	* zone: (public, block, dmz, drop, external, home, internal, trusted, work)
+3. used in [Service Management](../../Objective_7/Service)
+* service:
+	* enabled: BOOL
+	* name:
+	* state:
+		* started
+		* stopped
+		* restarted
+		* reload
 
 
 
