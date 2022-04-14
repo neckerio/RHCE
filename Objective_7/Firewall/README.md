@@ -8,6 +8,7 @@
 
 ### Implementation
 * [firewalld.yml](firewalld.yml)
+* [delfirewalld.yml](delfirewalld.yml)
 
 ### Useful Modules
 * Firewalld
