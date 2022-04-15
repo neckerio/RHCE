@@ -87,6 +87,117 @@
 		* stopped
 		* restarted
 		* reload
+4. used to [SSH Key Distribution](Objective_4)
+* authorized_key:
+	* comment:
+	* key: "{{ lookup('file', '/home/ansible/id_rsa.pub') }}"
+	* key_options:
+	* path: (default = ~/.ssh/authorized_keys)(remote node)
+	* state:
+	* user: (on remote node)
+5. used in [File Content Management](Objective_7/File)
+* file:
+	* group:
+	* mode:
+	* owner:
+	* path:
+	* recurse: (if directory)
+	* src: (for links)
+	* state:
+		* absent
+		* directory (-p implicit)
+		* file (modified OR state of path)
+		* touch (create file)
+		* hard (hard link)
+		* link (symbolic)
+		* src (for links)
+	* backup: BOOL
+* blockinfile:
+	* block:
+	* create:
+	* group:
+	* insertafter:
+	* insertbefore:
+	* mode:
+	* owner:
+	* path:
+	* state: (present/absent)
+	* validate:
+* stat
+	* path:
+* find
+	* age: (s,m,h,d,w)
+	* age_stamp: (atime,ctime,mtime)
+	* contains: (regex)
+	* excludes: (regex)
+	* file_type: (any,directory,file,link)
+	* hidden: BOOL
+	* paths:
+	* size:
+* lineinfile
+	* backup: BOOL
+	* create:
+	* firstmatch: (/w insertafter/instertbefore)
+	* group:
+	* insertafter: (after last match)
+	* insertbefore: (before last match)
+	* line:
+	* mode:
+	* owner:
+	* path:
+	* regex:
+	* search_string:
+	* state: (present/absent)
+	* validate:
+* copy:
+	* backup: BOOL
+	* content:
+	* dest:
+	* force:
+	* group:
+	* mode:
+	* owner:
+	* remote_src:
+	* src: (local path)
+	* validate:
+* fetch:
+	* dest: (adds remote host name to avoid conflicts)
+	* flat: (override default dest: behavior)
+	* src: (file only)
+* synchronize
+	* archive: BOOL
+	* compress: BOOL
+	* dest:
+	* existing_only: BOOL (don't create new files)
+	* group:
+	* mode:
+	* owner:
+	* private_key: (ssh)
+	* recursive: BOOL
+	* set_remote_user:
+	* src:
+* replace:
+	* after: (replace after this match)
+	* backup: BOOL
+	* before: (replace before this match)
+	* group:
+	* mode:
+	* owner:
+	* path: (file to mod)
+	* regexp:
+	* replace: (what to replace regex with)
+	* validate:
+* template:
+	* backup: BOOL
+	* dest:
+	* force:
+	* group:
+	* mode:
+	* owner:
+	* src:
+	* validate:
+
+
 
 
 

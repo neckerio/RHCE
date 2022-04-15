@@ -1,0 +1,52 @@
+---
+- name: delete all the files and copies made by files.yml from localhost
+  hosts: localhost
+  tasks:
+    - name: remove the directories fetched from remote nodes
+      file:
+        state: absent
+        path: "/tmp/{{ item }}"
+      loop:
+        - "{{ groups['all'][0] }}"
+        - "{{ groups['all'][1] }}"
+
+    - name: verify removal
+      command:
+        cmd: "vdir /tmp/"
+      register: tmp
+
+    - name: debugging tmp
+      debug:
+        var: tmp
+
+- name: delete all the files and copies made by files.yml from remote nodes
+  hosts: all
+  tasks:
+    - name: actually, just remove two lines from vimrc because the file is necessary
+      lineinfile:
+        state: absent
+        regexp: "^set"
+        path: /home/vagrant/.vimrc
+
+    - name: verify .vimrc has the offending lines removed
+      command:
+        cmd: "cat .vimrc"
+      register: vimrc
+
+    - name: debugging vimrc
+      debug:
+        var: vimrc
+
+    - name: remove the sshd_config in tmp
+      file:
+        state: absent
+        path: "/tmp/sshd_config"
+
+    - name: verify remove of sshd_config
+      command:
+        cmd: "vdir /tmp"
+      register: sshd
+
+    - name: debugging sshd
+      debug:
+        var: sshd

@@ -1,0 +1,77 @@
+---
+- name: manipulating files for practice with different modules
+  hosts: all
+  tasks:
+    - name: first copy sshd_config on remote host to temp
+      copy:
+        remote_src: True
+        src: /etc/ssh/sshd_config
+        dest: /tmp
+
+    - name: stat for confirmation
+      stat:
+        path: /tmp/sshd_config
+      register: tmp
+
+    - name: debugging stat
+      debug:
+        var: tmp
+
+    - name: modify /tmp/sshd_config
+      lineinfile:
+        state: present
+        dest: /tmp/sshd_config
+        line: "{{ item.line }}"
+        regexp: "{{ item.regexp }}"
+      loop:
+        - regexp: "^PasswordAuthentication"
+          line: "PasswordAuthentication no"
+        - regexp: "^PermitRootLogin"
+          line: "PermitRootLogin no"
+        - regexp: "^Port"
+          line: "Port 2222"
+
+    - name: using find to verify, kind of silly, but just experimenting
+      find:
+        contains: "^PasswordAuthentiation no"
+        file_type: file
+        paths: /tmp
+      register: find
+
+    - name: debugging find
+      debug:
+        var: find
+
+    - name: copy .vimrc file from control node
+      copy:
+        dest: /home/vagrant/.vimrc
+        src: /home/vagrant/.vimrc
+
+    - name: cat to verify
+      command:
+        cmd: "cat .vimrc"
+      register: vimrc
+
+    - name: debugging vimrc
+      debug:
+        var: vimrc
+
+    - name: fetch remote nodes .bashrc files
+      fetch:
+        src: /home/vagrant/.bashrc
+        dest: /tmp/bashrc
+
+- name: verifying the files exist on localhost
+  hosts: localhost
+  tasks:
+    - name: vdir to verify
+      command:
+        cmd: "vdir -a /tmp/{{ item }}/home/vagrant/"
+      loop:
+        - "{{ groups.all[0] }}"
+        - "{{ groups['all'][1] }}"
+      register: bashrc
+
+    - name: debugging bashrc
+      debug:
+        var: bashrc
