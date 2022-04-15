@@ -43,7 +43,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [ ] Create playbooks to configure systems to a specified state
 
 7. Use Ansible modules for system administration tasks that work with:
-	- [ ] Software packages and repositories
+	- [x] [Software packages and repositories](Objective_7/Packages)
 	- [x] [Services](Objective_7/Services)
 	- [x] [Firewall rules](Objective_7/Firewall)
 	- [ ] File systems
