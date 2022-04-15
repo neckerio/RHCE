@@ -80,7 +80,7 @@
 	2. cp repolist redhat.repo (use absolute paths IMPORTANT) to redhat.bak
 	3. use one of the commands above to turn off rhsm
 	4. use a SHELL module to get the repos I want (appstream/baseos-rpms), ABSOLUTE PATHS AGAIN, IMPORTANT (otherwise it tees into the homedir by default)
-
+---
 
 ```zsh
 cat /etc/yum.repos.d/redhat.bak | grep -E -A12 "*baseos-rpms*" | sudo tee > /etc/yum.repos.d/local.repo
@@ -89,6 +89,10 @@ cat /etc/yum.repos.d/redhat.bak | grep -E -A12 "*baseos-rpms*" | sudo tee > /etc
 ```zsh
 cat /etc/yum.repos.d/redhat.bak | grep -E -A12 "*appstream-rpms*" | sudo tee > /etc/yum.repos.d/local2.repo
 ```
+---
+
+
+
 
 	5. these scripts can probably be cleaned up, grep w/o cat, maybe I don't even need to TEE depending on whether **become* gives a sudo shell. I can even just append >> the appstream to the same _local.repo_ file, BUT this works at the moment and I'm ***MANY EXPLETIVES DELETED from notes***
 
