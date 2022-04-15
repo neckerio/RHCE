@@ -51,6 +51,12 @@
 * subscription-manager --attach --pool=POOLID
 * subscription-manager repos --list
 * subscription-manager repos --enable REPONAME
+* dnf config-manager --dump (list current config option)
+* dnf config-manager --add-repo ADDRESS
+* dnf config-manager --set-enabled REPO
+* dnf config-manager --set-disabled REPO
+* dnf repoinfo
+* dnf repolist
 
 ### Useful Directories/Files
 * /etc/rhsm/rhsm.conf
@@ -83,3 +89,5 @@ cat /etc/yum.repos.d/redhat.bak | grep -E -A12 "*appstream-rpms*" | sudo tee > /
 ```
 
 	5. these scripts can probably be cleaned up, grep w/o cat, maybe I don't even need to TEE depending on whether **become* gives a sudo shell. I can even just append >> the appstream to the same _local.repo_ file, BUT this works at the moment and I'm ***MANY EXPLETIVES DELETED from notes***
+
+3. **dnf:** module's attribute ***download_only:*** apparently only works with packages that aren't installed yet; unable to get rpms for installed pacakges.

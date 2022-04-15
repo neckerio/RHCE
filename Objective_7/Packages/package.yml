@@ -7,10 +7,10 @@
         name:
           - createrepo
           - vsftpd
-          - lftpd
+          - lftp
         state: latest
 
-- name: This is just for the remote nodes now
+- name: configure remote nodes 
   hosts: all
   tasks:
     - name: chown the pub directory for ftp
@@ -25,24 +25,87 @@
         download_only: True
         download_dir: /var/ftp/pub
         name:
-          - vim
-          - tmux
-          - python3
+          - mariadb
+          - nginx
+          - httpd
         state: latest
+
+    - name: use the createrepo command to get the necessary repodata 
+      command:
+        cmd: "createrepo /var/ftp/pub"
+
+    - name: verify the repodata was created
+      command:
+        cmd: "vdir /var/ftp/pub/repodata"
+
+    - name: chmod everything to correct ftp ownership
+      file:
+        state: directory
+        path: /var/ftp/pub
+        recurse: True
+        owner: ftp
+        group: ftp
+        mode: 0744
+
+    - name: open firewall on remote nodes for ftp
+      firewalld:
+        service: ftp
+        state: enabled
+        permanent: True
+        immediate: True
+
+    - name: allow anonymous in ftp (loop is used to allow for more settings later)
+      lineinfile:
+        line: "{{ item.line }}"
+        path: /etc/vsftpd/vsftpd.conf
+        regexp: "{{ item.regexp }}"
+        state: present
+      loop:
+        - regexp: "^anonymous_enable="
+          line: "anonymous_enable=YES"
+
+    - name: set SELinux to permissive
+      selinux:
+        policy: targeted
+        state: permissive
+
+    - name: restart services
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - firewalld
+        - vsftpd
 
 - name: make the .repo file on localhost
   hosts: localhost
   tasks:
-    - name: create a .repo file in /etc/yum.repos.d/
+    - name: create a .repo file in /etc/yum.repos.d/ for rhel2
       yum_repository:
-        name: local
+        name: rhel2
         enabled: True
         state: present
-        file: local
-        description: local
+        file: rhel2
+        description: rhel2
         gpgcheck: False
-        baseurl: ftp://
+        baseurl: "ftp://{{ groups['all'][0] }}/pub"
 
 
+    - name: create a .repo file in /etc/yum.repos.d/ for rhel3
+      yum_repository:
+        name: rhel3
+        enabled: True
+        state: present
+        file: rhel3
+        description: rhel3
+        gpgcheck: False
+        baseurl: "ftp://{{ groups['all'][1] }}/pub"
 
+    - name: verify repository is accessible
+      command:
+        cmd: "dnf repoinfo"
+      register: repoinfo
 
+    - name: debugging repoinfo
+      debug:
+        var: repoinfo

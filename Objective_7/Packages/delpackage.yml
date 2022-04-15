@@ -1,0 +1,67 @@
+---
+- name: remove all the changes made by package.yml on localhost
+  hosts: localhost
+  tasks:
+    - name: delete repositories in /etc/yum.repos.d/
+      yum_repository:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - rhel2
+        - rhel3
+
+- name: remove changes made by package.yml on remote nodes
+  hosts: all
+  tasks:
+    - name: set SELinux to enforcing
+      selinux:
+        policy: targeted
+        state: enforcing
+
+    - name: remove anonymous_enable from vsftpd (use loop for later expansion)
+      lineinfile:
+        state: absent
+        path: /etc/vsftpd/vsftpd.conf
+        regexp: "{{ item }}"
+      loop:
+        - "^anonymous_enable"
+
+    - name: remove ftp from firewalld
+      firewalld:
+        service: ftp
+        state: disabled
+        permanent: True
+        immediate: True
+
+    - name: change permissions and chown /var/ftp directory
+      file:
+        state: directory
+        recurse: True
+        owner: root
+        group: root
+        mode: 0644
+        path: /var/ftp/pub
+
+    - name: remove the rpms from /var/ftp (for practice not efficiency)
+      file:
+        state: absent
+        path: /var/ftp
+
+    - name: restart services
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - vsftpd
+        - firewalld
+
+- name: remove all the packages needed for package.yml from control and remote nodes
+  hosts: all, localhost
+  tasks:
+    - name: removing packages
+      dnf:
+        name:
+          - createrepo
+          - vsftpd
+          - lftp
+        state: absent
