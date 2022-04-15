@@ -46,12 +46,20 @@
 
 ### Useful Commands
 * subscription-manager config --rhsm.manage_repos=0
+* subscription-manager register --username=USERNAME --password=PASSWORD
+* subscription-manager --available
+* subscription-manager --attach --pool=POOLID
+* subscription-manager repos --list
+* subscription-manager repos --enable REPONAME
 
 ### Useful Directories/Files
 * /etc/rhsm/rhsm.conf
 * /etc/yum.repos.d/
 
 ### Useful Packages
+* createrepo
+* vsftpd
+* lftpd
 
 ---
 
