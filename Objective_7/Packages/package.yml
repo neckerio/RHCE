@@ -1,0 +1,48 @@
+---
+- name: just playing around with repos and packages
+  hosts: all, localhost
+  tasks:
+    - name: download important packages while remembering that name accepts lists
+      dnf:
+        name:
+          - createrepo
+          - vsftpd
+          - lftpd
+        state: latest
+
+- name: This is just for the remote nodes now
+  hosts: all
+  tasks:
+    - name: chown the pub directory for ftp
+      file:
+        state: directory
+        path: /var/ftp/pub
+        owner: ftp
+        group: ftp
+
+    - name: download some very important rpms
+      dnf:
+        download_only: True
+        download_dir: /var/ftp/pub
+        name:
+          - vim
+          - tmux
+          - python3
+        state: latest
+
+- name: make the .repo file on localhost
+  hosts: localhost
+  tasks:
+    - name: create a .repo file in /etc/yum.repos.d/
+      yum_repository:
+        name: local
+        enabled: True
+        state: present
+        file: local
+        description: local
+        gpgcheck: False
+        baseurl: ftp://
+
+
+
+
