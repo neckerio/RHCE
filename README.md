@@ -48,7 +48,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Firewall rules](Objective_7/Firewall)
 	- [ ] File systems
 	- [x] [Storage devices](Objective_7/Storage)
-	- [ ] File content
+	- [x] [File content](Objective_7/File)
 	- [ ] Archiving
 	- [ ] Scheduled tasks
 	- [ ] Security
