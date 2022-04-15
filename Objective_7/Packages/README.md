@@ -76,11 +76,10 @@
 	* subscription-manager config --rhsm.manage_repos=0
 	* or edit /etc/rhsm/rhsm.conf and set ***manage_repos*** to _0_
 2. If RHSM is a nightmare as it tends to be, the following is a long and tedious process to get the appstream and baseos from RHSM and turn it off:
-	1. turn it on, then repolist to get all repos (this may be the problem, but..)
-	2. cp repolist redhat.repo (use absolute paths IMPORTANT) to redhat.bak
-	3. use one of the commands above to turn off rhsm
-	4. use a SHELL module to get the repos I want (appstream/baseos-rpms), ABSOLUTE PATHS AGAIN, IMPORTANT (otherwise it tees into the homedir by default)
----
+	* turn it on, then repolist to get all repos (this may be the problem, but..)
+	* cp repolist redhat.repo (use absolute paths IMPORTANT) to redhat.bak
+	* use one of the commands above to turn off rhsm
+	* use a SHELL module to get the repos I want (appstream/baseos-rpms), ABSOLUTE PATHS AGAIN, IMPORTANT (otherwise it tees into the homedir by default)
 
 ```zsh
 cat /etc/yum.repos.d/redhat.bak | grep -E -A12 "*baseos-rpms*" | sudo tee > /etc/yum.repos.d/local.repo
@@ -89,11 +88,7 @@ cat /etc/yum.repos.d/redhat.bak | grep -E -A12 "*baseos-rpms*" | sudo tee > /etc
 ```zsh
 cat /etc/yum.repos.d/redhat.bak | grep -E -A12 "*appstream-rpms*" | sudo tee > /etc/yum.repos.d/local2.repo
 ```
----
 
-
-
-
-	5. these scripts can probably be cleaned up, grep w/o cat, maybe I don't even need to TEE depending on whether **become* gives a sudo shell. I can even just append >> the appstream to the same _local.repo_ file, BUT this works at the moment and I'm ***MANY EXPLETIVES DELETED from notes***
+	* these scripts can probably be cleaned up, grep w/o cat, maybe I don't even need to TEE depending on whether **become* gives a sudo shell. I can even just append >> the appstream to the same _local.repo_ file, BUT this works at the moment and I'm ***MANY EXPLETIVES DELETED from notes***
 
 3. **dnf:** module's attribute ***download_only:*** apparently only works with packages that aren't installed yet; unable to get rpms for installed pacakges.
