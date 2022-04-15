@@ -89,6 +89,6 @@ cat /etc/yum.repos.d/redhat.bak | grep -E -A12 "*baseos-rpms*" | sudo tee > /etc
 cat /etc/yum.repos.d/redhat.bak | grep -E -A12 "*appstream-rpms*" | sudo tee > /etc/yum.repos.d/local2.repo
 ```
 
-	* these scripts can probably be cleaned up, grep w/o cat, maybe I don't even need to TEE depending on whether **become* gives a sudo shell. I can even just append >> the appstream to the same _local.repo_ file, BUT this works at the moment and I'm ***MANY EXPLETIVES DELETED from notes***
+* these scripts can probably be cleaned up, grep w/o cat, maybe I don't even need to TEE depending on whether **become* gives a sudo shell. I can even just append >> the appstream to the same _local.repo_ file, BUT this works at the moment and I'm ***MANY EXPLETIVES DELETED from notes***
 
 3. **dnf:** module's attribute ***download_only:*** apparently only works with packages that aren't installed yet; unable to get rpms for installed pacakges.
