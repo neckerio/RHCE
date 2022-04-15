@@ -61,6 +61,8 @@
 ### Useful Directories/Files
 * /etc/rhsm/rhsm.conf
 * /etc/yum.repos.d/
+* /etc/vsftpd/vsftpd.conf
+* man vsftpd.conf
 
 ### Useful Packages
 * createrepo
