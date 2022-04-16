@@ -1,0 +1,122 @@
+---
+- name: configuring storage on a 4GiB device /dev/sdb using gpt. Mount with a Label.
+  hosts: all
+  tasks:
+    - name: parted to create the first partition
+      parted:
+        label: gpt
+        name: ext4
+        number: 1
+        device: /dev/sdb
+        part_start: 100MiB
+        part_end: 1GiB
+        state: present
+
+    - name: parted to create the second partition
+      parted:
+        label: gpt
+        name: xfs
+        number: 2
+        device: /dev/sdb
+        part_start: 1GiB
+        part_end: 2GiB
+        state: present
+
+    - name: parted to create the third partition
+      parted:
+        label: gpt
+        name: xfs2
+        number: 3
+        device: /dev/sdb
+        part_start: 2GiB
+        part_end: 3GiB
+        state: present
+        fs_type: xfs
+
+    - name: parted to create the fourth partition
+      parted:
+        label: gpt
+        name: swap
+        number: 4
+        device: /dev/sdb
+        part_start: 3GiB
+        part_end: 4049MiB
+        state: present
+        flags: [ swap ]
+
+    - name: manage mkfs.ext4
+      filesystem:
+        fstype: ext4
+        dev: /dev/sdb1
+        state: present
+        opts: "-L ext4"
+        force: True
+
+    - name: manage mkfs.xfs
+      filesystem:
+        fstype: xfs
+        dev: /dev/sdb2
+        state: present
+        opts: "-L xfs"
+        force: True
+
+    - name: manage mkfs.xfs
+      filesystem:
+        fstype: xfs
+        dev: /dev/sdb3
+        state: present
+        opts: "-L xfs2"
+        force: True
+
+    - name: manage mkswap
+      filesystem:
+        fstype: swap
+        dev: /dev/sdb4
+        state: present
+        opts: "-L swap"
+        force: True
+
+    - name: manage mount partition 1 ext4
+      mount:
+        boot: True
+        fstype: ext4
+        src: 'LABEL=ext4'
+        path: /mnt/ext4
+        state: mounted
+
+    - name: manage mount partition 2 xfs
+      mount:
+        boot: True
+        fstype: xfs
+        src: 'LABEL=xfs'
+        path: /mnt/xfs
+        state: mounted
+         
+    - name: manage mount partition 3 xfs2
+      mount:
+        boot: True
+        fstype: xfs
+        src: 'LABEL=xfs2'
+        path: /mnt/xfs2
+        state: mounted
+
+    - name: place partition 4 swap in /etc/fstab
+      mount:
+        boot: True
+        fstype: swap
+        src: 'LABEL=swap'
+        path: swap
+        state: present
+
+    - name: use swapon to mount partition 4 swap
+      command:
+        cmd: 'swapon -L swap'
+
+    - name: confirm everything is complete
+      command:
+        cmd: "lsblk --fs"
+      register: lsblk
+
+    - name: debugging lsblk
+      debug:
+        var: lsblk.stdout

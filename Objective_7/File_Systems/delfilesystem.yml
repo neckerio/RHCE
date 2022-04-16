@@ -1,0 +1,90 @@
+---
+- name: Deleting everything done by filesystem.yml
+  hosts: all
+  tasks:
+    - name: unmount and remove ext4 from /etc/fstab
+      mount:
+        src: 'LABEL=ext4'
+        state: absent
+        path: /mnt/ext4
+    - name: unmount and remove xfs from /etc/fstab
+      mount:
+        src: 'LABEL=xfs'
+        state: absent
+        path: /mnt/xfs
+    - name: unmount and remove xfs2 from /etc/fstab
+      mount:
+        src: 'LABEL=xfs2'
+        state: absent
+        path: /mnt/xfs2
+
+    - name: remove swap from /etc/fstab
+      mount:
+        src: 'LABEL=swap'
+        state: absent
+        path: swap
+
+    - name: swapoff partiton 4's swap space
+      command:
+        cmd: 'swapoff -L swap'
+
+    - name: remove ext4 filesystem from sdb1
+      filesystem:
+        dev: /dev/sdb1
+        fstype: ext4
+        state: absent
+        force: True
+
+    - name: remove xfs filesystem sdb2
+      filesystem:
+        dev: /dev/sdb2
+        fstype: xfs
+        state: absent
+        force: True
+
+    - name: remove xfs filesystem sdb3
+      filesystem:
+        dev: /dev/sdb3
+        fstype: ext4
+        state: absent
+        force: True
+
+    - name: remove swap filesystem from sdb4
+      filesystem:
+        dev: /dev/sdb4
+        fstype: swap
+        state: absent
+        force: True
+
+    - name: remove partition 4
+      parted:
+        state: absent
+        number: 4
+        device: /dev/sdb
+
+    - name: remove partition 3
+      parted:
+        state: absent
+        number: 3
+        device: /dev/sdb
+
+    - name: remove partition 2
+      parted:
+        state: absent
+        number: 2
+        device: /dev/sdb
+
+    - name: remove partition 1
+      parted:
+        state: absent
+        number: 1
+        device: /dev/sdb
+
+    - name: confirm /dev/sdb is clean
+      command:
+        cmd: "lsblk --fs"
+      register: lsblk
+
+    - name: debugging lsblk
+      debug:
+        var: lsblk.stdout
