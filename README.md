@@ -13,7 +13,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Inventories](Objective_2/Inventories)
 	- [x] [Modules](Objective_2/Modules)
 	- [x] [Variables](Objective_2/Variables)
-	- [ ] Facts
+	- [x] [Facts](Objective_2/Facts)
 	- [x] [Plays](Objective_2/Playbooks)
 	- [x] [Playbooks](Objective_2/Playbooks)
 	- [x] [Configuration files](Objective_2/Configuration)
