@@ -1,6 +1,7 @@
 # Variables
 
->Ansible uses variables to manage differences between systems. With Ansible, you can execute tasks and playbooks on multiple different systems with a single command. You can define these variables in your playbooks, in your inventory, in re-usable files or roles, or at the command line. You can also create variables during a playbook run by registering the return value or values of a task as a new variable. [^variables]
+>Ansible uses variables to manage differences between systems. With Ansible, you can execute tasks and playbooks on multiple different systems with a single command. You can define these variables in your playbooks, in your inventory, in re-usable files or roles, or at the command line. You can also create variables during a playbook run by registering the return value or values of a task as a new variable. 
+[^variables]
 
 ## Objective
 * Understand core components of Ansible
@@ -41,4 +42,4 @@
 
 
 ---
-[^variables] quoted from [Ansible Docs](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html)
+[^variables]: quoted from [Ansible Docs](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html)
