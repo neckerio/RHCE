@@ -17,7 +17,7 @@
 	* dest: '{{ my_var_path }}'
  
 * region: (list variable)
-	- - northeast
+\t \- northeast
 	- - southwest
 	- - north_by_northwest
 	* region "{{ region[0] }}
