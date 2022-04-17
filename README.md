@@ -14,8 +14,8 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Modules](Objective_2/Modules)
 	- [ ] Variables
 	- [ ] Facts
-	- [ ] Plays
-	- [ ] Playbooks
+	- [x] [Plays](Objective_2/Playbooks)
+	- [x] [Playbooks](Objective_2/Playbooks)
 	- [x] [Configuration files](Objective_2/Configuration)
 	- [ ] Use provided documentation to look up specific information about Ansible modules and commands
 	
