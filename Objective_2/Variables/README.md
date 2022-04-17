@@ -17,10 +17,10 @@
 	* dest: '{{ my_var_path }}'
  
 * region: (list variable)
-\t \- northeast
-	- - southwest
-	- - north_by_northwest
-	* region "{{ region[0] }}
+	* \- northeast
+	* \- southwest
+	* \- north_by_northwest
+	* region "{{ region[0] }}"
 	 
 * foo: (dictionary variable)
 	* fieldone: one
