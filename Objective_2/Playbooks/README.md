@@ -32,7 +32,7 @@
 ### Useful Modules
 * import_playbook:
 	* become: BOOL
-	* tags:
+	* tags: [^playbook_keywords]
 * include_playbook:
 
 * Literal Block Scalar "**|**" = maintains formatting (newlines)
@@ -60,3 +60,4 @@
 [^playbooks]: quoted from [Ansible Docs](https://docs.ansible.com/ansible/latest/user_guide/playbooks.html)
 [^importing]: quoted from [Ansible Docs](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse.html#playbooks-reuse)
 [^including]: quoted from [Ansible Docs](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse.html#playbooks-reuse)
+[^playbook_keywords]: quoted from [Ansible Docs](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#playbook-keywords)
