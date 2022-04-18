@@ -17,7 +17,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Plays](Objective_2/Playbooks)
 	- [x] [Playbooks](Objective_2/Playbooks)
 	- [x] [Configuration files](Objective_2/Configuration)
-	- [ ] Use provided documentation to look up specific information about Ansible modules and commands
+	- [x] [Use provided documentation to look up specific information about Ansible modules and commands](Objective_2/Documentation)
 	
 3. Install and configure an Ansible control node
 	- [ ] Install required packages
