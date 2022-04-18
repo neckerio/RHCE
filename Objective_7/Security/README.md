@@ -50,6 +50,8 @@
 	* ALT, add Existing context of 1 to 2
 * ls -lZ(d) (for dir)
 * ps auxZ | grep
+* semanage port -l (-C, for modified)
+* semanage port -a -p tcp 8080 -t http_port_t
 
 ### Useful Directories/Files
 * /var/log/messages (sealert)

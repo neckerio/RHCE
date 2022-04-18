@@ -1,0 +1,137 @@
+---
+- name: A basic playbook adjusting common SELinux components
+  hosts: all, localhost
+  tasks:
+    - name: download packages that I will be modifying (localhost dl for man pages)
+      dnf:
+        name:
+          - httpd
+          - vsftpd
+          - lftp
+        state: latest
+
+- name: Start by downloading packages, handling services and editing configs
+  hosts: all
+  tasks:
+    - name: make sure SELinux is on (mostly just to use the module)
+      selinux:
+        state: enforcing
+        policy: targeted
+
+    - name: open up firewalld ALT ports for http (8080) and vsftpd (2020/2121)
+      firewalld:
+        port: "{{ item }}"
+        state: enabled
+        permanent: True
+        immediate: True
+      loop:
+        - 2020/tcp
+        - 2121/tcp
+        - 8080/tcp
+
+    - name: start and enable the two services the two services
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: True
+      loop: 
+        - httpd
+        - vsftpd
+
+    - name: use lineinfile to replace the httpd default port
+      lineinfile:
+        regexp: '^Listen 80'
+        path: /etc/httpd/conf/httpd.conf
+        line: 'Listen 8080'
+
+    - name: use template to manage vsftpd.conf
+      template:
+        src: templates/vsftpd.j2
+        dest: /etc/vsftpd/vsfptd.conf
+        backup: True
+
+    - name: change config ownership for vsfptd
+      file:
+        path: /var/ftp/pub
+        state: directory
+        owner: ftp
+        group: ftp
+
+          # IMPORTANT NOTE: This will make ftp world readable/writeable by anonymous without a password. It is VERY unsafe and only done here for practice. DO NOT use in any serious environment.
+- name: Begin work with SELinux ports, booleans, fcontexts etc.
+  hosts: all
+  tasks:
+    - name: start by changing vsftpd context to be writable
+      sefcontext:
+        setype: public_content_rw_t
+        target: "/var/ftp/pub(/.*)?"
+        state: present
+
+    - name: run necessary restorecon to complete fcontext
+      command:
+        cmd: 'restorecon -v -R /var/ftp/pub'
+
+    - name: enable necessary sebooleans to make ftp anon writeable
+      seboolean:
+        name: "{{ item }}"
+        state: True
+        persistent: True
+      loop:
+        - ftpd_anon_write
+        - ftpd_full_access
+
+    - name: open seport for both httpd and vsftpd
+      seport:
+        ports: "{{ item.port }}"
+        proto: "{{ item.proto }}"
+        state: present
+        setype: "{{ item.type }}"
+      loop:
+        - port: 8080
+          proto: tcp
+          type: http_port_t
+        - port: 2020
+          proto: tcp
+          type: ftp_port_t
+        - port: 2121
+          proto: tcp
+          type: ftp_data_port_t
+
+    - name: finally restart the services
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - vsftpd
+        - httpd
+        - firewalld
+
+- name: a quick play to verify that the modifications to httpd above were successful
+  hosts: all
+  tasks:
+    - name: try grabbing a URI from the two ip.add.re.sses/8080
+      uri:
+        url: '"{{ item }}":8080'
+        return_content: True
+        status_code: 200
+      loop:
+        - "{{ groups['all'][0] }}"
+        - "{{ groups['all'][1] }}"
+
+- name: upload a file to the remote server vsftpd from localhost
+  hosts: localhost
+  tasks:
+    - name: use a shell module along with lftp
+      shell:
+        cmd: >
+          lftp "{{ item }}" << EOF
+          cd pub
+          put /etc/hosts
+          EOF
+      loop:
+        - "{{ groups['all'][0] }}"
+        - "{{ groups['all'][1] }}"
+
+
+
+
