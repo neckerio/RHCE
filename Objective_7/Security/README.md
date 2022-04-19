@@ -8,7 +8,7 @@
 
 ### Implementation
 * [selinux.yml](selinux.yml)
-* delselinux.yml
+* [delselinux.yml](delselinux.yml)
 
 ### Useful Modules
 * selinux:
@@ -78,9 +78,8 @@
 2. **uri:** module can be sent from control node or remote node; both can work but if sending from remote nodes, be sure they have appropriate permissions, settings etc. Easier to just send it from localhost
 3. Apparently, _vsftpd_ won't allow a user to login without a shell from /etc/shells when using _pamd/vsftpd_
 4. It is very useful to understand the difference between active and passive modes as well as the difference between the command and data port for ftp [^ftp] [^redhat]
-5. nf_conntrack modules may also be something to read up on.
-6. It seems I will have to use passive mode OR disable stuff in lftp [^redhat2] [^lftp]
-7. ansible all -a "setsetbool tftp_home_dir 1" may also be necessary
+5. It seems I will have to use passive mode OR disable stuff in lftp [^redhat2] [^lftp]
+6. nf_conntrack modules may also be something to read up on.
 
 
 ---

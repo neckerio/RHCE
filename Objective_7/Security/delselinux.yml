@@ -1,0 +1,145 @@
+---
+- name: undo changes made by selinux.yml, remove files and packages
+  hosts: all
+  tasks:
+    - name: remove everything inside the /pub directory
+      shell:
+        cmd: "{{ item }}"
+      loop:
+        - 'find /var/ftp/pub/ -type f -delete'
+        - 'find /var/ftp/pub/ -mindepth 1 -type d -delete'
+
+    - name: remove index.html
+      file:
+        state: absent
+        path: /var/www/html/index.html
+
+
+
+- name: undo changes made by selinux.yml
+  hosts: all
+  tasks:
+    - name: close seport for both httpd and vsftpd
+      seport:
+        ports: "{{ item.port }}"
+        proto: "{{ item.proto }}"
+        state: absent
+        setype: "{{ item.setype }}"
+      loop:
+        - port: 8080
+          proto: tcp
+          setype: http_port_t
+        - port: 2020
+          proto: tcp
+          setype: ftp_port_t
+        - port: 2020
+          proto: udp
+          setype: ftp_port_t
+        - port: 2121
+          proto: tcp
+          setype: ftp_data_port_t
+        - port: 2121
+          proto: udp
+          setype: ftp_data_port_t
+        - port: 3100-3200
+          proto: udp
+          setype: ftp_data_port_t
+        - port: 3100-3200
+          proto: tcp
+          setype: ftp_data_port_t
+
+    - name: disable sebooleans
+      seboolean:
+        name: "{{ item }}"
+        state: False
+        persistent: True
+      loop:
+        - ftpd_anon_write
+        - ftpd_full_access
+        - ftpd_use_passive_mode
+
+    - name: change sefcontext back to public_content only
+      sefcontext:
+        setype: public_content_t
+        target: "/var/ftp/pub(/.*)?"
+        state: present
+
+    - name: run necessary restorecon to complete sefcontext
+      command:
+        cmd: "restorecon -v -R /var/ftp/pub"
+
+
+
+- name: edit conifgs and permissions back to, mostly, what they were before
+  hosts: all
+  tasks:
+    - name: change ownership of /var/ftp back to root
+      file:
+        path: /var/ftp
+        state: directory
+        recurse: True
+        owner: root
+        group: root
+
+    - name: use lineinfile to revert httpd back to to default port
+      lineinfile:
+        regexp: '^Listen 8080'
+        path: /etc/httpd/conf/httpd.conf
+        line: 'Listen 80'
+
+    - name: close down ftp service from firewalld
+      firewalld:
+        service: ftp
+        state: disabled
+        permanent: True
+        immediate: True
+
+    - name: close down firewalld ALT ports for http and vsftpd
+      firewalld:
+        port: "{{ item }}"
+        state: disabled
+        permanent: True
+        immediate: True
+      loop:
+        - 2020/tcp
+        - 2020/udp
+        - 2121/tcp
+        - 2121/udp
+        - 8080/tcp
+        - 3100-3200/tcp
+        - 3100-3200/udp
+
+    - name: make sure SELinux is still enforcing (just practicing)
+      selinux:
+        state: enforcing
+        policy: targeted
+
+    - name: finally restart services
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - vsftpd
+        - httpd
+        - firewalld
+
+    - name: verify firewalld has removed ports
+      command:
+        cmd: "firewall-cmd --list-all"
+
+    - name: verify sebooleans are back to normal
+      command:
+        cmd: "semanage boolean -l -C"
+
+
+
+- name: remove packages from remote AND control nodes
+  hosts: all, localhost
+  tasks:
+    - name: remove the packages
+      dnf:
+        name:
+          - httpd
+          - vsftpd
+          - lftp
+        state: absent

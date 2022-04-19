@@ -81,7 +81,7 @@
         mode: 0755
 
     - name: add content to httpd root directory and handle ownership
-      lineinefile:
+      lineinfile:
         state: present
         create: True
         path: /var/www/html/index.html
@@ -174,7 +174,7 @@
     - name: use a shell module along with lftp to test vsftpd on remote nodes
       shell:
         cmd: |
-          lftp "{{ item }}" <<EOF
+          lftp "{{ item }}" -p 2121 <<EOF
           cd pub
           put /etc/hosts
           EOF
