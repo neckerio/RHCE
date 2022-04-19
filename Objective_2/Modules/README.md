@@ -197,6 +197,30 @@
 	* src:
 	* validate:
 
+5. used in [Security](Objective_7/Security)
+* selinux:
+	* state: 
+	* policy: (targeted)
+	* configfile:
+* seboolean:
+	* name:
+	* persistent: BOOL
+	* state: BOOL
+* sefcontext:
+	* setype: (public_content_rw_t)
+	* target:
+	* state: (p/a)
+	* reload: BOOL
+	* COMMAND: "restorecon -v -R /path/to/file
+* seport:
+	* ports: (lists and ranges)
+	* proto:
+	* reload:
+	* setype: (ssh_port_t)
+	* state: (p/a)
+* selinux_permissive:
+	* domain: (httpd_t)
+	* permissive: BOOL
 
 
 
