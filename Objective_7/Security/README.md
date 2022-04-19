@@ -79,7 +79,8 @@
 3. Apparently, _vsftpd_ won't allow a user to login without a shell from /etc/shells when using _pamd/vsftpd_
 4. It is very useful to understand the difference between active and passive modes as well as the difference between the command and data port for ftp [^ftp] [^redhat]
 5. It seems I will have to use passive mode OR disable stuff in lftp [^redhat2] [^lftp]
-6. nf_conntrack modules may also be something to read up on.
+6. ip_conntrack_ftp in /etc/sysconfig/iptables-config, might be something to read up on
+7. FIXME: the find commands in delselinux.yml are not idempotent.
 
 
 ---

@@ -13,15 +13,16 @@ listen_port=2121
 xferlog_std_format=YES
 listen=NO
 listen_ipv6=YES
-#listen_address6=::
-#apparently, if pasv is used I should just use listen and comment out IPV6
-#add boolean to allow ftp_home_dirs?
-#ip_conntrack_ftp in /etc/sysconfig/iptables-config
-pasv_enable=NO
+
+
+pasv_enable=YES
+pasv_max_port=3200
+pasv_min_port=3100
+
 
 pam_service_name=vsftpd
 userlist_enable=YES
-check_shell=NO
+
 
 anon_mkdir_write_enable=YES
 anon_other_write_enable=YES
@@ -29,5 +30,3 @@ anon_upload_enable=YES
 anon_world_readable_only=NO
 no_anon_password=YES
 anon_root=/var/ftp
-
-allow_writeable_chroot=YES

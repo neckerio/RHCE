@@ -126,10 +126,20 @@
     - name: verify firewalld has removed ports
       command:
         cmd: "firewall-cmd --list-all"
+      register: firewall
+
+    - name: debugging firewall
+      debug:
+        var: firewall.stdout
 
     - name: verify sebooleans are back to normal
       command:
         cmd: "semanage boolean -l -C"
+      register: boolean
+
+    - name: debugging boolean
+      debug:
+        var: boolean.stdout
 
 
 
