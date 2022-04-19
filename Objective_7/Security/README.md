@@ -54,6 +54,7 @@
 * ps auxZ | grep
 * semanage port -l (-C, for modified)
 * semanage port -a -p tcp 8080 -t http_port_t
+* lftp 192.168.56.37 -p 2121 -d (specific ip/port and with DEBUG flag)
 
 ### Useful Directories/Files
 * /var/log/messages (sealert)
@@ -78,9 +79,13 @@
 3. Apparently, _vsftpd_ won't allow a user to login without a shell from /etc/shells when using _pamd/vsftpd_
 4. It is very useful to understand the difference between active and passive modes as well as the difference between the command and data port for ftp [^ftp] [^redhat]
 5. nf_conntrack modules may also be something to read up on.
+6. It seems I will have to use passive mode OR disable stuff in lftp [^redhat2] [^lftp]
+7. ansible all -a "setsetbool tftp_home_dir 1" may also be necessary
 
 
 ---
 [^ftp]: This was the clearest explanation for me; from [jscape.com](https://www.jscape.com/blog/active-v-s-passive-ftp-simplified)
 [^redhat]: This old RHEL vsftpd walkthrough was also useful; from [RedHat](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/s2-ftp-servers-vsftpd)
+[^redhat2]: I can use [passive mode](https://access.redhat.com/solutions/1311053)
+[^lftp]: OR I can do it on the client-side, [disable lftp opts](https://networklessons.com/uncategorized/lftp-stuck-making-data-connection)
 
