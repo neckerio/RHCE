@@ -7,6 +7,8 @@
 ---
 
 ### Implementation
+* [selinux.yml](selinux.yml)
+* delselinux.yml
 
 ### Useful Modules
 * selinux:
@@ -68,4 +70,16 @@
 ---
 
 ## Notes
+1. When changing default ports for _vsftpd_ be sure to pay attention to the two options:
+	* connect_from_port_20=NO 
+	* listen_port=NEWPORT
+2. **uri:** module can be sent from control node or remote node; both can work but if sending from remote nodes, be sure they have appropriate permissions, settings etc. Easier to just send it from localhost
+3. Apparently, _vsftpd_ won't allow a user to login without a shell from /etc/shells when using _pamd/vsftpd_
+4. It is very useful to understand the difference between active and passive modes as well as the difference between the command and data port for ftp [^ftp] [^redhat]
+5. nf_conntrack modules may also be something to read up on.
+
+
+---
+[^ftp]: This was the clearest explanation for me; from [jscape.com](https://www.jscape.com/blog/active-v-s-passive-ftp-simplified)
+[^redhat]: This old RHEL vsftpd walkthrough was also useful; from [RedHat](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/deployment_guide/s2-ftp-servers-vsftpd)
 

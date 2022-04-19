@@ -1,4 +1,5 @@
 ---
+# IMPORTANT NOTE: This will make ftp world readable/writeable by anonymous without a password. It is VERY unsafe and only done here for practice. DO NOT use in any serious environment.
 - name: A basic playbook adjusting common SELinux components
   hosts: all, localhost
   tasks:
@@ -9,6 +10,8 @@
           - vsftpd
           - lftp
         state: latest
+
+
 
 - name: Start by downloading packages, handling services and editing configs
   hosts: all
@@ -28,6 +31,13 @@
         - 2020/tcp
         - 2121/tcp
         - 8080/tcp
+
+    - name: up up firewalld service for ftp
+      firewalld:
+        service: ftp
+        state: enabled
+        immediate: True
+        permanent: True
 
     - name: start and enable the two services the two services
       service:
@@ -57,7 +67,17 @@
         owner: ftp
         group: ftp
 
-          # IMPORTANT NOTE: This will make ftp world readable/writeable by anonymous without a password. It is VERY unsafe and only done here for practice. DO NOT use in any serious environment.
+    - name: add content to httpd root directory and handle ownership
+      lineinefile:
+        state: present
+        create: True
+        path: /var/www/html/index.html
+        owner: apache
+        group: apache
+        line: "Added content to satifty the URI module's requiremnt for a 200 OK"
+
+
+
 - name: Begin work with SELinux ports, booleans, fcontexts etc.
   hosts: all
   tasks:
@@ -106,22 +126,26 @@
         - httpd
         - firewalld
 
-- name: a quick play to verify that the modifications to httpd above were successful
-  hosts: all
+
+
+- name: a quick play to verify that the modifications to httpd/vsftpd were successful
+  hosts: localhost
   tasks:
     - name: try grabbing a URI from the two ip.add.re.sses/8080
       uri:
-        url: '"{{ item }}":8080'
+        url: 'http://{{ item }}:8080'
         return_content: True
         status_code: 200
       loop:
         - "{{ groups['all'][0] }}"
         - "{{ groups['all'][1] }}"
+      register: http
 
-- name: upload a file to the remote server vsftpd from localhost
-  hosts: localhost
-  tasks:
-    - name: use a shell module along with lftp
+    - name: debugging http
+      debug:
+        var: http.content
+
+    - name: use a shell module along with lftp to test vsftpd on remote nodes
       shell:
         cmd: >
           lftp "{{ item }}" << EOF
@@ -131,6 +155,11 @@
       loop:
         - "{{ groups['all'][0] }}"
         - "{{ groups['all'][1] }}"
+      register: lftp
+
+    - name: debugging lftp
+      debug:
+        var: lftp
 
 
 
