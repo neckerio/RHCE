@@ -21,7 +21,7 @@
         state: enforcing
         policy: targeted
 
-    - name: open up firewalld ALT ports for http (8080) and vsftpd (2020/2121)
+    - name: open up ALT ports for http (8080) and vsftpd (2020/2121)(3100-3200)
       firewalld:
         port: "{{ item }}"
         state: enabled
@@ -29,17 +29,21 @@
         immediate: True
       loop:
         - 2020/tcp
+        - 2020/udp
         - 2121/tcp
+        - 2121/udp
         - 8080/tcp
+        - 3100-3200/tcp
+        - 3100-3200/udp
 
-    - name: up up firewalld service for ftp
+    - name: open up firewalld service for ftp
       firewalld:
         service: ftp
         state: enabled
         immediate: True
         permanent: True
 
-    - name: start and enable the two services the two services
+    - name: start and enable the two services
       service:
         name: "{{ item }}"
         state: started
@@ -54,18 +58,27 @@
         path: /etc/httpd/conf/httpd.conf
         line: 'Listen 8080'
 
-    - name: use template to manage vsftpd.conf
+    - name: use the template module to manage vsftpd.conf
       template:
         src: templates/vsftpd.j2
-        dest: /etc/vsftpd/vsfptd.conf
+        dest: /etc/vsftpd/vsftpd.conf
         backup: True
 
-    - name: change config ownership for vsfptd
+    - name: change config ownership for vsfptd (writeable chroot dilemma)
+      file:
+        path: /var/ftp
+        state: directory
+        owner: ftp
+        group: ftp
+        mode: 0555
+
+    - name: change the ownership and mode to be writeable by ftp
       file:
         path: /var/ftp/pub
         state: directory
         owner: ftp
         group: ftp
+        mode: 0755
 
     - name: add content to httpd root directory and handle ownership
       lineinefile:
@@ -74,7 +87,7 @@
         path: /var/www/html/index.html
         owner: apache
         group: apache
-        line: "Added content to satifty the URI module's requiremnt for a 200 OK"
+        line: "Added content to satifty the URI module's requirement for a 200 OK"
 
 
 
@@ -99,6 +112,7 @@
       loop:
         - ftpd_anon_write
         - ftpd_full_access
+        - ftpd_use_passive_mode
 
     - name: open seport for both httpd and vsftpd
       seport:
@@ -113,7 +127,19 @@
         - port: 2020
           proto: tcp
           type: ftp_port_t
+        - port: 2020
+          proto: udp
+          type: ftp_port_t
         - port: 2121
+          proto: tcp
+          type: ftp_data_port_t
+        - port: 2121
+          proto: udp
+          type: ftp_data_port_t
+        - port: 3100-3200
+          proto: udp
+          type: ftp_data_port_t
+        - port: 3100-3200
           proto: tcp
           type: ftp_data_port_t
 
@@ -131,7 +157,7 @@
 - name: a quick play to verify that the modifications to httpd/vsftpd were successful
   hosts: localhost
   tasks:
-    - name: try grabbing a URI from the two ip.add.re.sses/8080
+    - name: Use the URI module to access the two IPs at port 8080
       uri:
         url: 'http://{{ item }}:8080'
         return_content: True
@@ -143,12 +169,12 @@
 
     - name: debugging http
       debug:
-        var: http.content
+        var: http.results
 
     - name: use a shell module along with lftp to test vsftpd on remote nodes
       shell:
-        cmd: >
-          lftp "{{ item }}" << EOF
+        cmd: |
+          lftp "{{ item }}" <<EOF
           cd pub
           put /etc/hosts
           EOF
@@ -157,10 +183,21 @@
         - "{{ groups['all'][1] }}"
       register: lftp
 
-    - name: debugging lftp
+    - name: debugging lftp, loop register
       debug:
-        var: lftp
+        var: item.cmd
+      loop: "{{ lftp.results }}"
 
 
 
+- name: verify lftp upload success on remote nodes
+  hosts: all
+  tasks:
+    - name: use vdir to examine content of /var/ftp/pub
+      command:
+        cmd: "vdir /var/ftp/pub"
+      register: vdir
 
+    - name: debugging vdir
+      debug:
+        var: vdir.stdout
