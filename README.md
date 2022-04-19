@@ -51,7 +51,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [File content](Objective_7/File)
 	- [ ] Archiving
 	- [ ] Scheduled tasks
-	- [ ] Security
+	- [x] [Security](Objective_7/Security)
 	- [ ] Users and groups
 
 8. Work with roles
