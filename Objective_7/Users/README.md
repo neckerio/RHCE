@@ -100,6 +100,6 @@ echo "alias a=ansible ap=ansible-playbook ad=ansible-doc" >> .bashrc; source .ba
 3. When looping over info.yml, I found that the loop reference "{{ userinfo }}" didn't work when on a separate line than loop with a hyphen. The solution was to just put it on the same line as the loop
 
 ---
-[^authkey]: reference number one in Notes
-[^mode]: reference number two in Notes
+[^authkey]: reference number one in [Notes](#Notes)
+[^mode]: reference number two in [Notes](#Notes)
 
