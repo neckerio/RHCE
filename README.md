@@ -49,7 +49,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [File systems](Objective_7/File_Systems)
 	- [x] [Storage devices](Objective_7/Storage)
 	- [x] [File content](Objective_7/File)
-	- [ ] Archiving
+	- [x] [Archiving](Objective_7/Archive)
 	- [ ] Scheduled tasks
 	- [x] [Security](Objective_7/Security)
 	- [x] [Users and groups](Objective_7/Users)
