@@ -92,10 +92,14 @@ echo "alias a=ansible ap=ansible-playbook ad=ansible-doc" >> .bashrc; source .ba
 ---
 
 ## Notes
-1. [^authkey]: The lookup plugin CAN NOT search through hidden files with /path. SSH keys must be moved somewhere visible to the plugin. An unhidden file/directory
-2. [^mode]: SSH keys require specific modes in order for them to be accepted as safe
+1. The lookup plugin CAN NOT search through hidden files with /path. SSH keys must be moved somewhere visible to the plugin. An unhidden file/directory
+2. SSH keys require specific modes in order for them to be accepted as safe
 	* directory = 0755
 	* public key = 0644
 	* private key = 0600
 3. When looping over info.yml, I found that the loop reference "{{ userinfo }}" didn't work when on a separate line than loop with a hyphen. The solution was to just put it on the same line as the loop
+
+---
+[^authkey]: reference number one in Notes
+[^mode]: reference number two in Notes
 
