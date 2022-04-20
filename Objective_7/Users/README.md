@@ -51,22 +51,22 @@
 * id
 * id USER
 * sudo passwd USER -S
-* to help with yaml format
 ```zsh
 echo "autocmd FileType yaml setlocal ai ts=2 sw=2 et" >> .vimrc; source .vimrc
 ```
-* to help with navigation in vim
+* to help with yaml format
 ```zsh
 echo "set number relativenumber" >> .vimrc; source .vimrc"
 ```
-* to help with bash navigation
+* to help with navigation in vim
 ```zsh
 echo "set -o vi" >> .bashrc; source .bashrc
 ```
-* ansible aliases
+* to help with bash navigation
 ```zsh
 echo "alias a=ansible ap=ansible-playbook ad=ansible-doc" >> .bashrc; source .bashrc
 ```
+* ansible aliases
 
 ### Useful Directories/Files
 * /etc/passwd
