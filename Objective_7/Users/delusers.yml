@@ -1,0 +1,74 @@
+---
+- name: undo the damage caused by users.yml; starting with privileges
+  hosts: all
+  vars_files:
+    - info.yml
+  tasks:
+    - name: remove sudo privileges file in /etc/sudoers.d/
+      file:
+        state: absent
+        path: /etc/sudoers.d/privileged
+
+    - name: completely remove users and related directories and files
+      user:
+        name: "{{ item.username }}"
+        state: absent
+        force: True
+        remove: True
+      loop: "{{ userinfo }}"
+
+    - name: remove groups
+      group:
+        name: "{{ item.groupname }}"
+        gid: "{{ item.gid }}"
+        state: absent
+      loop: "{{ groupinfo }}"
+
+    - name: confirm deletion of sudoers.d file
+      command:
+        cmd: "vdir /etc/sudoers.d/"
+      register: vdir
+
+    - name: debugging vdir
+      debug:
+        var: vdir.stdout
+
+    - name: confirm deletion of users and groups
+      shell:
+        cmd: "getent group; getent passwd"
+      register: getent
+
+    - name: debugging getent
+      debug:
+        var: getent.stdout
+          
+
+
+- name: completely remove users and groups from localhost
+  hosts: localhost
+  vars_files:
+    - info.yml
+  tasks:
+    - name: completely remove users and related directories and files
+      user:
+        name: "{{ item.username }}"
+        state: absent
+        force: True
+        remove: True
+      loop: "{{ userinfo }}"
+
+    - name: remove groups
+      group:
+        name: "{{ item.groupname }}"
+        gid: "{{ item.gid }}"
+        state: absent
+      loop: "{{ groupinfo }}"
+
+    - name: confirm deletion of users and groups
+      shell:
+        cmd: "getent group; getent passwd"
+      register: getent
+
+    - name: debugging getent
+      debug:
+        var: getent.stdout

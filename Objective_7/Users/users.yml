@@ -1,5 +1,5 @@
 ---
-- name: Creating users, groups and granting sudo permissions using vars. Generate ssh keys and add userinfo based on facts/hostvars, copy keys over to readable file
+- name: Creating users and groups, granting sudo privileges and generating ssh keys
   hosts: localhost
   vars_files:
     - info.yml
