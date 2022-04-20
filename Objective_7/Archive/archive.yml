@@ -1,0 +1,104 @@
+---
+- name: make an  archive on Control Node for later use
+  hosts: localhost
+  tasks:
+    - name: make a directory to archive
+      file:
+        state: directory
+        path: /home/vagrant/llibrary
+
+    - name: create files on localhost to archive
+      shell:
+        cmd: "mkdir /home/vagrant/llibrary/dir{1..7}; touch /home/vagrant/llibrary/file{1..20}"
+
+    - name: archive the llibrary directory
+      archive:
+        dest: /home/vagrant/larchive.gz
+        path: /home/vagrant/llibrary
+        remove: True
+        owner: vagrant
+        group: vagrant
+
+    - name: unarchive on localhost too, for the vast amounts of fun
+      unarchive:
+        dest: /home/vagrant
+        src: /home/vagrant/larchive.gz
+        owner: vagrant
+        group: vagrant
+
+    - name: download rsync to test out synchronize
+      dnf:
+        name: rsync
+        state: latest
+
+
+
+
+- name: create archive on Remote Nodes
+  hosts: all
+  tasks:
+    - name: create files to archive
+      file:
+        state: directory
+        owner: vagrant
+        group: vagrant
+        path: /home/vagrant/rlibrary
+
+    - name: create files on Remote Nodes to archive
+      shell:
+        cmd: "mkdir /home/vagrant/rlibrary/dir{1..7}; touch /home/vagrant/rlibrary/file{1..20}"
+
+    - name: archive the rlibrary
+      archive:
+        dest: /home/vagrant/rarchive.gz
+        path: /home/vagrant/rlibrary
+        remove: True
+        owner: vagrant
+        group: vagrant
+
+    - name: download rsync to test out synchronize
+      dnf:
+        name: rsync
+        state: latest
+
+
+
+
+- name: copy larchive.gz to Remote Nodes
+  hosts: all
+  tasks:
+    - name: copy over archive to Remote Nodes
+      synchronize:
+        src: /home/vagrant/larchive.gz
+        dest: /home/vagrant/larchive.gz
+        perms: True
+
+
+
+           
+- name: copy archive files from the internet using the uri module
+  hosts: all
+  tasks:
+    - name: use the uri module to get the linux kernel, ~197M
+      uri:
+        url: https://git.kernel.org/torvalds/t/linux-5.18-rc3.tar.gz
+        dest: /home/vagrant/linuxarchive.tar.gz
+        owner: vagrant
+        group: vagrant
+
+
+
+- name: unarchive all the archives on Remote Nodes
+  hosts: all
+  tasks:
+    - name: unarchive everything
+      unarchive:
+        owner: vagrant
+        group: vagrant
+        remote_src: True
+        src: "{{ item }}"
+        dest: /home/vagrant
+      loop:
+        - larchive.gz
+        - rarchive.gz
+        - linuxarchive.tar.gz

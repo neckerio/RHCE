@@ -1,0 +1,34 @@
+---
+- name: remove all the files created by archive.yml on localhost and delete rsync
+  hosts: localhost
+  tasks:
+    - name: quick file removal
+      file:
+        state: absent
+        path: "{{ item }}"
+      loop:
+        - /home/vagrant/larchive.gz
+        - /home/vagrant/llibrary
+
+    - name: remove rsnyc
+      dnf:
+        name: rsync
+        state: absent
+
+
+
+- name: remove all the files created by archive.yml on Remote Nodes and delete rsync
+  hosts: all
+  tasks:
+    - name: quick file removal
+      file:
+        state: absent
+        path: "{{ item }}"
+      loop:
+        - /home/vagrant/larchive.gz
+        - /home/vagrant/llibrary
+        - /home/vagrant/rarchive.gz
+        - /home/vagrant/rlibrary
+        - /home/vagrant/linuxarchive.tar.gz
+        - /home/vagrant/linux-5.18-rc3
+

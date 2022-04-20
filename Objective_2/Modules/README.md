@@ -221,7 +221,63 @@
 * selinux_permissive:
 	* domain: (httpd_t)
 	* permissive: BOOL
-
+6. used in managing [Users and Groups](Objective_7/Users)
+* user:
+	* append:
+	* group:
+	* groups:
+	* home:
+	* name:
+	* password:
+	* password_expire_max:
+	* password_expire_min:
+	* remove: BOOL
+	* shell:
+	* ssh_key_comment:
+	* ssh_key_file: /path
+	* state:
+	* generate_ssh_key: BOOL
+	* force: BOOL
+* group:
+	* name:
+	* gid:
+	* state: p/a
+	* system: BOOL
+* authorized_key:
+	* comment:
+	* key: "{{ lookup('file','/path') }}"
+	* path: (auth key file on remote nodes)
+	* state:
+	* user:
+* known_hosts: (hopefully, useless)
+	* path: (definitive)
+	* state: p/a
+	* name: host1.example.com
+	* key: host1.example.com ssh-rsa 
+7. used in [Archiving](Objective_7/Archive)
+* archive:
+	* dest:
+	* force_archive:
+	* format: (gz,bz2,tar,xz,zip)
+	* group:
+	* mode:
+	* owner:
+	* path:
+	* remove: (after adding to archive)
+	* exclude_path:
+	* exclude_patterns:
+* unarchive:
+	* creates: (if specified path already exists do **NOT** create)
+	* dest: /absolute/path/unpack
+	* group:
+	* keep_newer: BOOL
+	* list_files: BOOL
+	* mode:
+	* owner:
+	* remote_src: BOOL
+	* src:
+	* include:
+	* exclude: item1,item2,item3
 
 
 
