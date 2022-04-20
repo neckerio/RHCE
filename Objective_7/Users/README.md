@@ -45,6 +45,12 @@
 	* key: host1.example.com ssh-rsa 
 
 ### Useful Commands
+* getent passwd
+* sudo getent shadow
+* getent group
+* id
+* id USER
+* sudo passwd USER -S
 * to help with yaml format
 ```zsh
 echo "autocmd FileType yaml setlocal ai ts=2 sw=2 et" >> .vimrc; source .vimrc
@@ -63,6 +69,9 @@ echo "alias a=ansible ap=ansible-playbook ad=ansible-doc" >> .bashrc; source .ba
 ```
 
 ### Useful Directories/Files
+* /etc/passwd
+* /etc/shadow
+* /etc/sudoers.d/
 * /home/USER/.bashrc
 * /home/USER/.vimrc
 
@@ -78,5 +87,5 @@ echo "alias a=ansible ap=ansible-playbook ad=ansible-doc" >> .bashrc; source .ba
 	* directory = 0755
 	* public key = 0644
 	* private key = 0600
+3. When looping over info.yml, I found that the loop reference "{{ userinfo }}" didn't work when on a separate line than loop with a hyphen. The solution was to just put it on the same line as the loop
 
----

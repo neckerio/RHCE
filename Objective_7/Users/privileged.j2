@@ -1,0 +1,6 @@
+{% for item in groupinfo %}
+{% if item.sudo %}
+%{{ item.groupname}} ALL=(ALL:ALL) NOPASSWD:ALL
+{% endif %}
+{% endfor %}
+

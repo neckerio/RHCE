@@ -1,0 +1,35 @@
+---
+userinfo:
+  - username: dasha
+    groupname: admin
+  - username: nastya
+    groupname: developer
+  - username: zhenya
+    groupname: developer
+  - username: misha
+    groupname: developer
+  - username: masha
+    groupname: tester
+  - username: sasha
+    groupname: designer
+  - username: tanya
+    groupname: tester
+  - username: sveta
+    groupname: devops
+
+groupinfo:
+  - groupname: admin
+    gid: 5000
+    sudo: yes
+  - groupname: devops
+    gid: 5001
+    sudo: yes
+  - groupname: developer
+    gid: 5002
+    sudo: no
+  - groupname: tester
+    gid: 5003
+    sudo: no
+  - groupname: designer
+    gid: 5004
+    sudo: no

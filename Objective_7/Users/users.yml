@@ -1,0 +1,86 @@
+---
+- name: Creating users, groups and granting sudo permissions using vars. Generate ssh keys and add userinfo based on facts/hostvars, copy keys over to readable file
+  hosts: localhost
+  vars_files:
+    - info.yml
+  tasks:
+    - name: create the groups that the users will eventually belong to
+      group:
+        name: "{{ item.groupname }}"
+        state: present
+        gid: "{{ item.gid }}"
+      loop: "{{ groupinfo }}"
+
+    - name: create users and generate ssh keys in a place that lookup can find
+      user:
+        name: "{{ item.username }}"
+        groups: "{{ item.groupname }}"
+        password: "{{ 'vagrant' | password_hash('sha512', 'randomsalt') }}"
+        state: present
+        generate_ssh_key: True
+        ssh_key_comment: "{{ item.username }}@{{ ansible_hostname }} to {{item.username }}@{{ groups['all'][0] }}/{{ groups['all'][1] }}"
+        ssh_key_file: "/home/{{ item.username }}/id_rsa"
+      loop: "{{ userinfo }}"
+
+    - name: chmod user's homedir to be compatible with ssh_key requirements. IMPORTANT!
+      file:
+        path: "/home/{{ item.username }}"
+        state: directory
+        mode: 0755
+      loop: "{{ userinfo }}"
+
+    - name: chmod generated public ssh_key to meet ssh requirements. IMPORTANT!
+      file:
+        path: /home/{{ item.username }}/id_rsa.pub
+        state: touch
+        mode: 0644
+      loop: "{{ userinfo }}"
+
+    - name: chmod generated private ssh_key to meet ssh requirements. IMPORTANT!
+      file:
+        path: /home/{{ item.username }}/id_rsa
+        state: touch
+        mode: 0600
+      loop: "{{ userinfo }}"
+        
+
+
+- name: create the same user's accounts and groups on the Remote Nodes
+  hosts: all
+  vars_files:
+    - info.yml
+  tasks:
+    - name: create the groups that the users will eventually belong to
+      group:
+        name: "{{ item.groupname }}"
+        state: present
+        gid: "{{ item.gid }}"
+      loop: "{{ groupinfo }}"
+
+    - name: create users proper
+      user:
+        name: "{{ item.username }}"
+        groups: "{{ item.groupname }}"
+        password: "{{ 'vagrant' | password_hash('sha512', 'randomsalt') }}"
+        state: present
+      loop: "{{ userinfo }}"
+
+
+
+- name: use "lookup" to transfer ssh keys to Remote Nodes and create privileged groups
+  hosts: all
+  vars_files:
+    - info.yml
+  tasks:
+    - name: use "lookup", which doesn't work on hidden files, to transfer ssh_keys
+      authorized_key:
+        key: "{{ lookup('file', '/home/{{ item.username }}/id_rsa.pub') }}"
+        user: "{{ item.username }}"
+        state: present
+      loop: "{{ userinfo }}"
+
+    - name: give the correct groups sudo privileges on Remote Nodes
+      template:
+        src: privileged.j2
+        dest: /etc/sudoers.d/privileged
+        validate: 'visudo -cf %s'
