@@ -2,7 +2,7 @@
 
 ## Objective
 * Install and configure an Ansible control node
-	*  Manage parallelism [^async]   [^strategies]
+	*  Manage parallelism[^async] [^strategies]
 	
 ---
 
