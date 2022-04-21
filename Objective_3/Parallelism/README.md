@@ -2,7 +2,7 @@
 
 ## Objective
 * Install and configure an Ansible control node
-	*  Manage parallelism[^async] [^strategies]
+	*  Manage parallelism
 	
 ---
 
@@ -32,7 +32,7 @@
 ---
 
 ## Notes
-* KEY-IDEAS = Async/Poll, Forks, Strategies, Keywords of Execution
+* KEY-IDEAS = Async/Poll[^async], Forks, Strategies[^strategies], Keywords of Execution
 * Parallel Task Execution, manages the number of Hosts on which tasks are executed simultaneously
 
 > By default, Ansible runs each task on all hosts affected by a play before starting the next task on any host, using 5 forks. If you want to change this default behavior, you can use a different strategy plugin, change the number of forks, or apply one of several keywords like serial.
