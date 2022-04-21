@@ -1,0 +1,95 @@
+---
+- name: PLAY ONE - simulate a couple "long-running" plays with polling defined
+  hosts: all,localhost
+  tasks:
+    - name: ONE, Sleep 10 Poll 2
+      command:
+        cmd: "sleep 10"
+      async: 20
+      poll: 2
+    - name: TWO, Sleep 8 Poll 2
+      command:
+        cmd: "sleep 8"
+      async: 20
+      poll: 2
+    - name: THREE, Sleep 5 Poll 1
+      command:
+        cmd: "sleep 5"
+      async: 45
+      poll: 1
+
+
+
+- name: Play 2 - simulate a couple "long-running" plays with polling at 0
+  hosts: all,localhost
+  tasks:
+    - name: ONE, Sleep 30 Poll 0
+      command:
+        cmd: "sleep 30"
+      async: 45
+      poll: 0
+    - name: TWO, Sleep 20 Poll 0
+      command:
+        cmd: "sleep 20"
+      async: 45
+      poll: 0
+    - name: THREE, Sleep 15 Poll 0
+      command:
+        cmd: "sleep 15"
+      async: 45
+      poll: 0
+    - name: FOUR, Sleep 10 Poll 0
+      command:
+        cmd: "sleep 10"
+      async: 45
+      poll: 0
+    - name: FIVE, Sleep 5 Poll 0
+      command:
+        cmd: "sleep 5"
+      async: 45
+      poll: 0
+
+
+
+
+- name: PLAY 3 - same as Play 2 but with SERIAL defined at 1 and no localhost
+  hosts: all
+  serial: 1
+  tasks:
+    - name: ONE, SERIAL 1 Sleep 30 Poll 0
+      command:
+        cmd: "sleep 30"
+      async: 45
+      poll: 0
+    - name: TWO, SERIAL 1 Sleep 20 Poll 0
+      command:
+        cmd: "sleep 20"
+      async: 45
+      poll: 0
+    - name: THREE, SERIAL 1 Sleep 15 Poll 0
+      command:
+        cmd: "sleep 15"
+      async: 45
+      poll: 0
+    - name: FOUR, SERIAL 1 Sleep 10 Poll 0
+      command:
+        cmd: "sleep 10"
+      async: 45
+      poll: 0
+    - name: FIVE, SERIAL 1 Sleep 5 Poll 0
+      command:
+        cmd: "sleep 5"
+      async: 45
+      poll: 0
+
+
+
+- name: PLAY 4 - Run one "long-running" play with serial at 1 and polling defined
+  hosts: all
+  serial: 1
+  tasks:
+    - name: ONE, SERIAL 1 Sleep 10 Poll 2
+      command:
+        cmd: "sleep 10"
+      async: 45
+      poll: 2
