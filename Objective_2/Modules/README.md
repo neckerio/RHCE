@@ -278,6 +278,27 @@
 	* src:
 	* include:
 	* exclude: item1,item2,item3
+7. used in [Scheduled Tasks](Objective_7/Scheduled_Tasks)
+* cron:
+	* backup: BOOL
+	* day:
+	* disabled: BOOL
+	* hour:
+	* job: 
+	* minute:
+	* month:
+	* name: (description)
+	* reboot: (run on reboot) BOOL
+	* special_time: (hourly, reboot, weekly etc)
+	* user: (whose crontab?)
+	* weekday:
+* at:
+	* command:
+	* count: (# of units in the future to exec cmd)
+	* script_file:
+	* state: p/a
+	* units: (minutes, hours, day, week)
+	* unique: BOOL
 
 
 

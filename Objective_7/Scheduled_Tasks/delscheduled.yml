@@ -1,0 +1,25 @@
+---
+- name: remove the files, packages etc. created by scheduled.yml
+  hosts: all,localhost
+  tasks:
+    - name: remove the at.log created by at
+      file:
+        state: absent
+        path: /home/vagrant/at.log
+
+    - name: remove the cron from crontab
+      cron:
+        state: absent
+        user: vagrant
+        name: spammer
+
+    - name: stop the atd service
+      service:
+        name: atd
+        state: stopped
+        enabled: False
+
+    - name: remove the at package
+      dnf:
+        name: at
+        state: absent

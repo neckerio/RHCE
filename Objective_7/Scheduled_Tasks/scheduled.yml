@@ -1,0 +1,30 @@
+---
+- name: simple playbook to practice scheduled tasks
+  hosts: all, localhost
+  tasks:
+    - name: install at
+      dnf:
+        name: at
+        state: latest
+
+    - name: start atd service
+      service:
+        name: atd
+        state: started
+        enabled: True
+
+    - name: first just spam the logs
+      cron:
+        minute: '*/1'
+        job: logger HELLO!!!!!!!!!!!!!!!!!!!
+        name: spammer
+        user: vagrant
+        state: present
+
+    - name: testing out at
+      at:
+        command: /usr/bin/lsblk  > /home/vagrant/at.log
+        count: 1
+        units: minutes
+        state: present
+
