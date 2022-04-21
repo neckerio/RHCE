@@ -24,7 +24,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Create a static host inventory file](Objective_2/Inventories)
 	- [x] [Create a configuration file](Objective_2/Configuration)
 	- [x] [Create and use static inventories to define groups of hosts](Objective_2/Inventories)
-	- [ ] Manage parallelism
+	- [x] [Manage parallelism](Objective_3/Parallelism)
 	
 4. Configure Ansible managed nodes
 	- [x] [Create and distribute SSH keys to managed nodes](Objective_4)
