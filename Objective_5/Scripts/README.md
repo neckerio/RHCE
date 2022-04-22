@@ -18,6 +18,7 @@
 * sed 
 * comm
 * sort 
+* cut
 
 ### Useful Directories/Files
 
