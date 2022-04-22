@@ -8,7 +8,7 @@
 ---
 
 ### Implementation
-* [copy_ssh_keys.sh](copy_ssh_keys.sh)
+* [UNSAFE_copy_ssh_keys.sh](UNSAFE_copy_ssh_keys.sh)
 
 ### Useful Modules
 
