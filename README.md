@@ -32,8 +32,8 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Validate a working configuration using ad hoc Ansible commands](Objective_4)
 	
 5. Script administration tasks
-	- [ ] Create simple shell scripts
-	- [ ] Create simple shell scripts that run ad hoc Ansible commands
+	- [x] [Create simple shell scripts](Objective_5/Scripts)
+	- [x] [Create simple shell scripts that run ad hoc Ansible commands](Objective_5/Scripts)
 
 6. Create Ansible plays and playbooks
 	- [ ] Know how to work with commonly used Ansible modules

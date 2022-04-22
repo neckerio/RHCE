@@ -299,6 +299,60 @@
 	* state: p/a
 	* units: (minutes, hours, day, week)
 	* unique: BOOL
+8. used in [Facts](Objective_7/Facts)
+* debug:
+	* msg:
+	* var:
+* setup:
+	* filter:
+		* ansible_all_ipv4_addresses (for virtualbox two)
+		* ansible_all_ipv6_addresses (for virtualbox three)
+		* ansible_default_ipv4
+		* ansible_default_ipv6
+		* ansible_NETWORK-DEVICE
+		* ansible_interfaces
+
+
+		* ansible_device_links (partition uuid/labels/~hardware)
+		* ansible_devices (partition sizes/uuids/labels)
+		* ansible_mounts
+
+
+		* ansible_date_time
+		* ansible_env (environment)
+		* ansible_hostname
+		* ansible_fqdn
+		* ansible_nodename
+		* ansible_pkg_mgr
+		* ansible_python
+		* ansible_service_mgr
+		* ansible_selinux
+
+
+		* ansible_user_dir
+		* ansible_user_gecos
+		* ansible_user_id
+		* ansible_user_gid
+		* ansible_user_shell
+
+
+		* ansible_os_family
+		* ansible_distribution
+		* ansible_distribution_major_version
+		* ansible_distribution_release
+		* ansible_version
+
+
+		* ansible_kernel
+		* ansible_kernel_version
+
+
+		* ansible_memfree_mb
+		* ansible_memory_mb (RAM)
+		* ansible_memtotal_mb
+		* ansible_swapfree_mb
+		* ansible_swaptotal_mb
+ 
 
 
 
