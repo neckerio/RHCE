@@ -12,6 +12,11 @@
 * [adhoc.sh](adhoc.sh)
 
 ### Useful Modules
+* setup:
+	* filter=ansible_
+* debug:
+	* msg:
+	* var:
 
 ### Useful Commands
 * awk
@@ -19,6 +24,7 @@
 * comm
 * sort 
 * cut
+* tr
 
 ### Useful Directories/Files
 
