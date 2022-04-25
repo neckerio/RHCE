@@ -6,7 +6,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Configure local storage](Objective_1/Storage)
 	- [ ] Create and configure file systems
 	- [ ] Deploy, configure, and maintain systems
-	- [ ] Manage users and groups
+	- [x] [Manage users and groups](Objective_1/Users)
 	- [x] [Manage security](Objective_1/Security)
 
 2. Understand core components of Ansible
