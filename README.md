@@ -7,7 +7,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [ ] Create and configure file systems
 	- [ ] Deploy, configure, and maintain systems
 	- [ ] Manage users and groups
-	- [ ] Manage security
+	- [x] [Manage security](Objective_1/Security)
 
 2. Understand core components of Ansible
 	- [x] [Inventories](Objective_2/Inventories)
