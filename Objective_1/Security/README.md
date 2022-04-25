@@ -1,10 +1,72 @@
 # Manage Security (RHCSA)
 
-## Objective
+## Objective RHCE
 * Be able to perform all tasks expected of a Red Hat Certified System Administrator
 	* Manage security
 
+## Objective RHCSA
+* Manage security
+        * Configure firewall settings using firewall-cmd/firewalld
+        * Create and use file access control lists
+        * Configure key-based authentication for SSH
+        * Set enforcing and permissive modes for SELinux
+        * List and identify SELinux file and process context
+        * Restore default file contexts
+        * Use boolean settings to modify system SELinux settings
+        * Diagnose and address routine SELinux policy violations
+
 ---
+
+## RHCSA NOTES: SSH
+
+### Useful Information
+* restart services after modification
+* correct permissions for SSH (IMPORTANT!)
+	* .ssh = 0700
+	* key.pub = 0644
+	* key = 0600
+
+### Useful Commands
+* ssh-keygen -t ed25519 -C "rhel" (+ optional passphrase)
+* ssh-copy-id -i ~/.ssh id_ed25519 user@rhel.com
+* ssh -X or ssh -Y to display gui from target on local server
+* ssh localhost (can work, if needed for some reason)
+* ssh agent (skip passphrase) 
+	* ps aux | grep ssh-agent
+	* eval "$(ssh-agent)" (gives pid)
+	* ssh-add ~/.ssh/rhel_id_ed25519 (store password in memory)
+
+
+### Useful Directories/Files
+* /etc/ssh (where fingerprints are stored)
+* /etc/ssh/sshd_config (client; restart after mod)
+* /etc/ssh/ssh_config (server)
+* ~.ssh/config
+
+
+
+## RHCSA NOTES: ACL
+
+### Useful Information
+* default acl applies to new files
+* acl applies to old files (already created) (set both)
+* leaves a + at the end of the permissions
+* setfacl automatically filters out the execute permission on files from directories. This is the "mask" and "#effective" options you see when you run getfacl
+
+
+### Useful Commands
+* setfacl
+* getfacl
+* setfacl -R -m g:account:rwx sales (recursive acl for group account on /sales)
+* setfacl -R -m d:g:account:rwx sales (same as above, but set as DEFAULT)
+
+
+
+### Useful Directories/Files
+* man setfacl
+
+
+
 
 ## RHCSA NOTES: SELinux
 
