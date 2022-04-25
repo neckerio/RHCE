@@ -3,7 +3,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 1. Be able to perform all tasks expected of a Red Hat Certified System Administrator
 	- [ ] Understand and use essential tools
 	- [ ] Operate running systems
-	- [ ] Configure local storage
+	- [x] [Configure local storage](Objective_1/Storage)
 	- [ ] Create and configure file systems
 	- [ ] Deploy, configure, and maintain systems
 	- [ ] Manage users and groups
