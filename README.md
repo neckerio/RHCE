@@ -4,7 +4,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [ ] Understand and use essential tools
 	- [ ] Operate running systems
 	- [x] [Configure local storage](Objective_1/Storage)
-	- [ ] Create and configure file systems
+	- [x] [Create and configure file systems](Objective_1/File_Systems)
 	- [ ] Deploy, configure, and maintain systems
 	- [x] [Manage users and groups](Objective_1/Users)
 	- [x] [Manage security](Objective_1/Security)

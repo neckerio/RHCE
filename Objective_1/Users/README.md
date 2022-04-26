@@ -60,6 +60,8 @@
 		* if password is :!!: it is disabled (default)
 * /etc/passwd
 	* user:password:UID:GID:GECOS (additional non mandatory):home dir:shell
+* /etc/sudoers.d/FILE
+	* NAME	ALL=(ALL)	NOPASSWD: ALL
 
 ### Useful Packages
 
