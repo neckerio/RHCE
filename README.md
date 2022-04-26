@@ -5,7 +5,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [ ] Operate running systems
 	- [x] [Configure local storage](Objective_1/Storage)
 	- [x] [Create and configure file systems](Objective_1/File_Systems)
-	- [ ] Deploy, configure, and maintain systems
+	- [x] [Deploy, configure, and maintain systems](Objective_1/Deploy_Maintain_Systems)
 	- [x] [Manage users and groups](Objective_1/Users)
 	- [x] [Manage security](Objective_1/Security)
 
