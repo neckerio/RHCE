@@ -8,11 +8,7 @@
 ---
 
 ## Implementation
-- selinux with vsftpd
-- make playbook that downloads the reqs first
-- calls roles
-- use roles to replace plays of selinux
-- rhce notes has a collections example, for posix even
+* [vsftpd](vsftpd)
 
 ## Useful Information
 * ROLES, overview of subdirectory:
@@ -87,3 +83,4 @@
 
 ## Notes
 1. IMPORTANT: be sure to check the meta/requirements.yml in Roles. This is especially true for rhel-system-roles.selinux and linux-system-roles.selinux. It will not run otherwise.
+2. Collections and roles are in the play header. 
