@@ -1,0 +1,153 @@
+---
+# tasks file for vsftpd
+# IMPORTANT NOTE: This will make ftp world readable/writeable by anonymous without a password. It is VERY unsafe and only done here for practice. DO NOT use in any serious environment.
+- name: download packages that I will be modifying (localhost dl for man pages)
+  dnf:
+    name:
+      - vsftpd
+      - lftp
+    state: latest
+
+
+- name: make sure SELinux is on (mostly just to use the module)
+  selinux:
+    state: enforcing
+    policy: targeted
+
+- name: open up ALT ports for vsftpd (2020/2121)(3100-3200)
+  firewalld:
+    port: "{{ item }}"
+    state: enabled
+    permanent: True
+    immediate: True
+  loop:
+    - 2020/tcp
+    - 2020/udp
+    - 2121/tcp
+    - 2121/udp
+    - 3100-3200/tcp
+    - 3100-3200/udp
+
+- name: open up firewalld service for ftp
+  firewalld:
+    service: ftp
+    state: enabled
+    immediate: True
+    permanent: True
+
+- name: start and enable the service
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: True
+  loop: 
+    - vsftpd
+
+- name: use the template module to manage vsftpd.conf
+  template:
+    src: templates/vsftpd.j2
+    dest: /etc/vsftpd/vsftpd.conf
+    backup: True
+
+- name: change config ownership for vsfptd (writeable chroot dilemma)
+  file:
+    path: /var/ftp
+    state: directory
+    owner: ftp
+    group: ftp
+    mode: 0555
+
+- name: change the ownership and mode to be writeable by ftp
+  file:
+    path: /var/ftp/pub
+    state: directory
+    owner: ftp
+    group: ftp
+    mode: 0755
+
+
+
+
+- name: start by changing vsftpd context to be writable
+  sefcontext:
+    setype: public_content_rw_t
+    target: "/var/ftp/pub(/.*)?"
+    state: present
+
+- name: run necessary restorecon to complete fcontext
+  command:
+    cmd: 'restorecon -v -R /var/ftp/pub'
+
+- name: enable necessary sebooleans to make ftp anon writeable
+  seboolean:
+    name: "{{ item }}"
+    state: True
+    persistent: True
+  loop:
+    - ftpd_anon_write
+    - ftpd_full_access
+    - ftpd_use_passive_mode
+
+- name: open seport for and vsftpd
+  seport:
+    ports: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    state: present
+    setype: "{{ item.type }}"
+  loop:
+    - port: 2020
+      proto: tcp
+      type: ftp_port_t
+    - port: 2020
+      proto: udp
+      type: ftp_port_t
+    - port: 2121
+      proto: tcp
+      type: ftp_data_port_t
+    - port: 2121
+      proto: udp
+      type: ftp_data_port_t
+    - port: 3100-3200
+      proto: udp
+      type: ftp_data_port_t
+    - port: 3100-3200
+      proto: tcp
+      type: ftp_data_port_t
+
+- name: finally restart the services
+  service:
+    name: "{{ item }}"
+    state: restarted
+  loop:
+    - vsftpd
+    - firewalld
+
+
+
+- name: use a shell module along with lftp to test vsftpd on remote nodes
+  shell:
+    cmd: |
+      lftp "{{ item }}" -p 2121 <<EOF
+      cd pub
+      put /etc/hosts
+      EOF
+  loop:
+    - "{{ groups['all'][0] }}"
+    - "{{ groups['all'][1] }}"
+  register: lftp
+
+- name: debugging lftp, loop register
+  debug:
+    var: item.cmd
+  loop: "{{ lftp.results }}"
+
+
+
+- name: use vdir to examine content of /var/ftp/pub
+  command:
+    cmd: "vdir /var/ftp/pub"
+  register: vdir
+
+- name: debugging vdir
+  debug:
+    var: vdir.stdout

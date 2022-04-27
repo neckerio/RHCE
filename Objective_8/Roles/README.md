@@ -12,6 +12,7 @@
 - make playbook that downloads the reqs first
 - calls roles
 - use roles to replace plays of selinux
+- rhce notes has a collections example, for posix even
 
 ## Useful Information
 * ROLES, overview of subdirectory:
