@@ -55,8 +55,8 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Users and groups](Objective_7/Users)
 
 8. Work with roles
-	- [ ] Create roles
-	- [ ] Download roles from an Ansible Galaxy and use them
+	- [x] [Create roles](Objective_8/Roles/vsftpd)
+	- [x] [Download roles from an Ansible Galaxy and use them](Objective_8/Roles)
 
 9. Use advanced Ansible features
 	- [ ] Create and use templates to create customized configuration files
