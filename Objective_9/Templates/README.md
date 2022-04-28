@@ -6,8 +6,8 @@
 
 ---
 ## Implementation
-* interfaces.j2
-* hosts.j2
+* [interfaces.j2](interfaces.j2)
+* [hosts.j2](hosts.j2)
 
 ### Useful Information
 * JINJA2 is a template, which is a config file that contains variables, is generated on managed hosts according to host specific requirements

@@ -6,6 +6,13 @@
 
 ---
 
+### Implementation
+* [vault_encrypted_passwords.yml](vault_encrypted_passwords.yml)
+* [users.yml](users.yml) = the encrypted file with passwords
+* [vault_pass.txt](vault_pass.txt) = the password for the encrypted file
+* [delvault_encrypted_passwords.yml](delvault_encrypted_passwords.yml)
+
+
 ### Useful Information
 * ANSIBLE VAULT, to deal with sensitive data, used to encrypt/decrypt files
 	* makes sense to store encrypted and unencrypted vars in diff files and use group_vars host_vars variable inclusion
