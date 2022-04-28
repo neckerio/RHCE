@@ -1,0 +1,17 @@
+{% for intf in interfaces -%}
+interface {{ intf }}
+ description {{ interfaces[intf].description }}
+ ip address {{ interfaces[intf].ipv4_address }}
+{% endfor %}
+
+
+## NOTE!, interfaces[intf] needs to be used to access the attributes of each	interfaces, the interfaces have been labeled as "intf" in the for loop
+
+## NOTE!, both key:value can be retrieved using this notation, output is the same, this makes it easier to access attributes, especially deeply nested things, apparently.
+
+#		{% for iname, idata in interfaces.items() -%}
+#		interface {{ iname }}
+#		description {{ idata.description }}
+#		ip address {{ idata.ipv4_address }}
+#		{% endfor %}
+
