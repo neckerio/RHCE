@@ -36,11 +36,11 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Create simple shell scripts that run ad hoc Ansible commands](Objective_5/Scripts)
 
 6. Create Ansible plays and playbooks
-	- [ ] Know how to work with commonly used Ansible modules
-	- [ ] Use variables to retrieve the results of running a command
+	- [x] [Know how to work with commonly used Ansible modules](Objective_7)
+	- [x] [Use variables to retrieve the results of running a command](Objective_6/Variable_Results)
 	- [ ] Use conditionals to control play execution
 	- [ ] Configure error handling
-	- [ ] Create playbooks to configure systems to a specified state
+	- [x] [Create playbooks to configure systems to a specified state](Objective_7)
 
 7. Use Ansible modules for system administration tasks that work with:
 	- [x] [Software packages and repositories](Objective_7/Packages)

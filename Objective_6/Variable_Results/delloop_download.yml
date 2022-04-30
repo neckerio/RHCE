@@ -1,0 +1,34 @@
+---
+- name: remove all changes made by loop_download.yml
+  hosts: all
+  tasks:
+    - name: DNF remove awesome packages using dnf's inherent list
+      dnf:
+        name:
+          - vim
+          - tmux
+          - httpd
+          - vsftpd
+        state: absent
+
+    - name: remove users by looping over a list
+      user:
+        name: "{{ item }}"
+        state: absent
+        remove: True
+        force: True
+      loop:
+        - katya
+        - sveta
+        - alyona
+        - misha
+        - jhenya
+
+    - name: verify users have been removed
+      command:
+        cmd: 'getent passwd'
+      register: passwd
+
+    - name: debugging passwd
+      debug:
+        var: passwd.stdout

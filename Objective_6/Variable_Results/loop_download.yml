@@ -1,0 +1,33 @@
+---
+- name: download dnf items using inherent list, then add users using loop list
+  hosts: all
+  tasks:
+    - name: DNF download a list of amazing packages
+      dnf:
+        name:
+          - vim
+          - tmux
+          - httpd
+          - vsftpd
+        state: latest
+
+    - name: create a list of users with a loop list
+      user:
+        state: present
+        name: "{{ item }}"
+        password: "{{ 'vagrant' | password_hash('sha512','randomsalt') }}"
+      loop:
+        - katya
+        - sveta
+        - alyona
+        - misha
+        - jhenya
+
+    - name: verify user creation for fun
+      command:
+        cmd: 'getent passwd'
+      register: passwd
+
+    - name: debugging passwd
+      debug:
+        var: passwd.stdout

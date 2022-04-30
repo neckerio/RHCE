@@ -352,6 +352,13 @@
 		* ansible_memtotal_mb
 		* ansible_swapfree_mb
 		* ansible_swaptotal_mb
+9. used in [Variable Results](Objective_6/Variable_Results)
+* loop:
+	* "{{ variable }}"
+	* - list
+* register:
+* handlers
+	* notify:
  
 
 
