@@ -1,0 +1,37 @@
+---
+- name: Using blocks and other commands to handle errors and failures
+  hosts: all
+  tasks:
+    - name: using a rescue and always on a block failure
+      block:
+        - name: THIS WILL FAIL!!!
+          command:
+            cmd: 'lsblk'
+          failed_when: 0 == 0
+      rescue:
+        - name: THIS IS A RESCUE!!!!
+          command:
+            cmd: 'blkid'
+      always:
+        - name: THIS IS AN ALWAYS!!!!
+          command:
+            cmd: 'lsblk --fs'
+
+
+- name: test out ignore_errors in tandem with the fail module and its message
+  hosts: all
+  ignore_errors: True
+  tasks:
+    - name: register something to create a failure
+      command:
+        cmd: 'getent passwd'
+      register: passwd
+
+    - name: report a FAILURE, should be IGNORED!
+      fail:
+        msg: 'You messed everything up. Imbecile.'
+      when: "'vagrant' in passwd.stdout"
+
+    - name: third task to check ignore_errors is working
+      debug:
+        msg: "This should be a GREEN SUCCESS, meaning ignore_errors worked."

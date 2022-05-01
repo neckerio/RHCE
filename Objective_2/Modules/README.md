@@ -362,9 +362,15 @@
 10. used in [Conditions](Objective_6/Conditionals)
 * when:
 * changed_when:
-
-
-
+11. used in [Error_Handling](Objective_6/Error_Handling)
+* block:
+	* rescue:
+	* always:
+* fail:
+* failed_when:
+* ignore_fails:
+* force_handlers:
+* any_errors_fatal:
 
 
 
