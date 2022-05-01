@@ -1,0 +1,45 @@
+---
+- name: use various conditionals in playbooks
+  hosts: all
+  vars:
+    worker_nodes:
+      - rhel2
+      - rhel3
+  tasks:
+    - name: a simple dnf download based on a condtion
+      dnf:
+        name: vsftpd
+        state: latest
+      when: ansible_memfree_mb > 300
+
+
+    - name: a reboot based on vars defined in playbook header
+      reboot:
+      when: ansible_hostname in worker_nodes
+        
+
+    - name: add a partition based on a multi-valued condition
+      parted:
+        state: present
+        label: gpt
+        name: one
+        number: 1
+        device: /dev/sdb
+        flags: [ lvm ]
+        part_start: 100MiB
+        part_end: 800MiB
+        fs_type: ext4
+      when: (ansible_distribution == "Archlinux" and ansible_facts['devices']['sdb'] is defined) or (ansible_distribution == "RedHat" and ansible_facts['devices']['sdb'] is defined)
+
+
+    - name: create a register to user in next condition
+      command:
+        cmd: "getent passwd"
+      register: passwd
+
+    - name: useradd based on a condition from the results of a register
+      user:
+        state: present
+        name: dasha
+        password: "{{ 'vagrant' | password_hash('sha512','randomsalt') }}"
+      when: passwd.stdout.find('dasha') == -1

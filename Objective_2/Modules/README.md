@@ -359,7 +359,9 @@
 * register:
 * handlers
 	* notify:
- 
+10. used in [Conditions](Objective_6/Conditionals)
+* when:
+* changed_when:
 
 
 

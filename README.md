@@ -38,7 +38,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 6. Create Ansible plays and playbooks
 	- [x] [Know how to work with commonly used Ansible modules](Objective_7)
 	- [x] [Use variables to retrieve the results of running a command](Objective_6/Variable_Results)
-	- [ ] Use conditionals to control play execution
+	- [x] [Use conditionals to control play execution](Objective_6/Conditionals)
 	- [ ] Configure error handling
 	- [x] [Create playbooks to configure systems to a specified state](Objective_7)
 

@@ -1,0 +1,36 @@
+---
+- name: undo the any changes made by conditonals.yml using silly true conditionals
+  hosts: all
+  vars:
+    worker_nodes:
+      - rhel2
+      - rhel3
+  tasks:
+    - name: dnf remove
+      dnf:
+        name: vsftpd
+        state: absent
+      when: ansible_facts['devices']['sda'] is defined and 20 > 10
+
+    - name: remove partition
+      parted:
+        state: absent
+        name: one
+        number: 1
+        label: gpt
+        device: /dev/sdb
+        flags: [ lvm ]
+      when: ansible_distribution == "RedHat" and ansible_hostname in worker_nodes
+
+    - name: create a register to remove user
+      command:
+        cmd: 'getent passwd'
+      register: passwd
+
+    - name: userdel based on a condition from register
+      user:
+        name: dasha
+        state: absent
+        force: true
+        remove: true
+      when: passwd.stdout.find('dasha') != -1
