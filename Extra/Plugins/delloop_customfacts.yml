@@ -1,0 +1,23 @@
+---
+- name: removing packages downloaded by loop_customfacts.yml
+  hosts: all
+  tasks:
+    - name: dnf remove packages
+      dnf:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ ansible_local | json_query('[*.packages.*]') | flatten }}"
+
+    - name: remove custom facts file
+      file:
+        path: /etc/ansible/facts.d/package.fact
+        state: absent
+
+    - name: verify
+      command:
+        cmd: "vdir /etc/ansible/facts.d/"
+      register: vdir
+
+    - name: debugging vdir
+      debug:
+        var: vdir.stdout

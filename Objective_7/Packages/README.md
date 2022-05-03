@@ -47,7 +47,7 @@
 ### Useful Commands
 * subscription-manager config --rhsm.manage_repos=0
 * subscription-manager register --username=USERNAME --password=PASSWORD
-* subscription-manager --available
+* subscription-manager list --available
 * subscription-manager --attach --pool=POOLID
 * subscription-manager repos --list
 * subscription-manager repos --enable REPONAME

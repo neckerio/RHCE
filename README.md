@@ -62,4 +62,8 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 	- [x] [Create and use templates to create customized configuration files](Objective_9/Templates)
 	- [x] [Use Ansible Vault in playbooks to protect sensitive data](Objective_9/Vault)
 ---
+## EXTRA
+1. [Use Plugins](Extra/Plugins)
+
+
 [^note]: As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.

@@ -1,0 +1,32 @@
+---
+- name: Use lookup and query plugins as a test
+  hosts: all
+  tasks:
+    - name: testing plugin with query
+      shell:
+        cmd: "echo '{{ item }} this is from QUERY' >> plugins.txt"
+      loop: "{{ query('inventory_hostnames', 'all') }}"
+      register: query
+
+    - name: debugging query
+      debug:
+        var: query
+
+    - name: testing plugin with lookup
+      shell:
+        cmd: "echo '{{ item }} this is from LOOKUP' >> plugins.txt"
+      loop: "{{ lookup('inventory_hostnames', 'all', wantlist=True) }}"
+      register: lookup
+
+    - name: debugging lookup
+      debug:
+        var: lookup
+
+    - name: cat text file
+      command:
+        cmd: "cat plugins.txt"
+      register: cat
+
+    - name: debugging cat
+      debug:
+        var: cat.stdout
