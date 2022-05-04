@@ -372,6 +372,17 @@
 * force_handlers:
 * any_errors_fatal:
 
+12. used in [ACLs](Extra/ACL)
+* acl:
+	* path:
+	* default: BOOL
+	* entity:
+	* etype:
+	* permissions: (rwx)
+	* recursive: BOOL
+	* state: (a/p query)
+ 
+
 
 
 ---

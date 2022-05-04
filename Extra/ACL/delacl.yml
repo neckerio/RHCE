@@ -1,0 +1,33 @@
+---
+- name: remove everything created by acl.yml
+  hosts: all
+  vars:
+    users:
+      - username: sasha
+        groupname: managers
+      - username: dasha
+        groupname: managers
+      - username: sveta
+        groupname: workers
+      - username: misha
+        groupname: workers
+  tasks:
+    - name: first delete the /tmp/acl folder
+      file:
+        state: absent
+        path: /tmp/acl
+
+    - name: delete users
+      user:
+        state: absent
+        name: "{{ item.username }}"
+      loop: "{{ users }}"
+
+    - name: verify
+      command:
+        cmd: "getent passwd"
+      register: passwd
+
+    - name: debugging passwd
+      debug:
+        var: passwd.stdout

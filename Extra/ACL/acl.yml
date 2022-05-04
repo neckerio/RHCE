@@ -1,0 +1,92 @@
+---
+- name: just practice some ACL just in case they make you do it on the exam
+  hosts: all
+  vars:
+    users:
+      - username: sasha
+        groupname: managers
+      - username: dasha
+        groupname: managers
+      - username: sveta
+        groupname: workers
+      - username: misha
+        groupname: workers
+  tasks:
+    - name: first add the groups
+      group:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - managers
+        - workers
+
+    - name: add users
+      user:
+        name: "{{ item.username }}"
+        password: "{{ 'vagrant' | password_hash('sha512','randomsalt') }}" 
+        groups: "{{ item.groupname }}"
+      loop: "{{ users }}"
+
+    - name: first make a directory to operate on
+      file:
+        state: directory
+        path: /tmp/acl
+        owner: dasha
+        group: managers
+        mode: 0770
+
+    - name: confirm 
+      acl:
+        path: /tmp/acl
+        state: query
+      register: acl
+
+    - name: debugging acl
+      debug:
+        var: acl
+
+- name: next playbook to actually perform the ACL
+  hosts: all
+  tasks:
+    - name: CURRENT allow managers full access to the /tmp/acl folder
+      acl:
+        path: /tmp/acl
+        state: present
+        etype: group
+        entity: managers
+        recurse: True
+        permissions: rwx
+
+    - name: DEFAULT allow managers full access to the /tmp/acl folder
+      acl:
+        path: /tmp/acl
+        state: present
+        etype: group
+        entity: managers
+        default: True
+        recurse: True
+        permissions: rwx
+
+    - name: CURRENT allow workers read and execute access to the /tmp/acl folder
+      acl:
+        path: /tmp/acl
+        state: present
+        etype: group
+        entity: workers
+        recurse: True
+        permissions: rx
+
+    - name: DEFAULT allow workers read and execute access to the /tmp/acl folder
+      acl:
+        path: /tmp/acl
+        state: present
+        etype: group
+        entity: workers
+        default: True
+        recurse: True
+        permissions: rx
+      register: acl2
+
+    - name: debugging acl2
+      debug:
+        var: acl2
