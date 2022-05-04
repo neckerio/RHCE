@@ -7,6 +7,8 @@
 
 ### Implementation
 * [lookup_query.yml](lookup_query.yml)
+* [loop_customfacts.yml](loop_customfacts.yml)
+* [delloop_customfacts.yml](delloop_customfacts.yml)
 
 ### Useful Information
 * Filter plugins manipulate data. With the right filter you can extract a particular value, transform data types and formats, perform mathematical calculations, split and concatenate strings, insert dates and times, and do much more. Ansible uses the standard filters shipped with Jinja2 and adds some specialized filter plugins. You can create custom Ansible filters as plugins.
