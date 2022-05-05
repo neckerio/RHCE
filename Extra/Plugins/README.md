@@ -34,9 +34,12 @@
 
 ### Useful Directories/Files
 * /etc/ansible/facts.d/
+* ANSIBLE DOCS = FILTERS
 
 ### Useful Packages
 
 ---
 
 ## Notes
+1. Discovered a loop Alternative to json_query, using dict2items. In implementation as ALT
+2. Maybe that is what happens in the background when **ansible.cfg** has the option ***stdout_callback = yaml*** set.

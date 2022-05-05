@@ -1,0 +1,19 @@
+---
+- name: setting up hosts for looping over custom facts
+  hosts: all
+  tasks: 
+    - name: make sure proper directories exist
+      file:
+        state: directory
+        path: /etc/ansible/facts.d/
+
+    - name: copy over template of customfacts.j2
+      template:
+        src: customfacts.j2
+        dest: /etc/ansible/facts.d/package.fact
+
+    - name: dnf download custom facts vars
+      dnf:
+        name: "{{ item.value }}"
+        state: latest
+      loop: "{{ ansible_local['package']['packages'] | dict2items }}"
