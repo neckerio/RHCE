@@ -1,4 +1,4 @@
-# Plugins
+# Plugins and Filters
 
 ## Objective
 * EXTRA
@@ -8,6 +8,7 @@
 ### Implementation
 * [lookup_query.yml](lookup_query.yml)
 * [loop_customfacts.yml](loop_customfacts.yml)
+* [loop_customfacts_alt.yml](loop_customfacts_alt.yml)
 * [delloop_customfacts.yml](delloop_customfacts.yml)
 
 ### Useful Information
@@ -24,7 +25,18 @@
  
 
 
-### Useful Modules
+### Useful Plugins/Filters [^examples]
+* {{ myvar | type_debug }}
+* {{ dict | dict2items }}
+* {{ files | dict2items(key_name='file', value_name='path') }}
+* {{ tags | items2dict }}
+* {{ tags | items2dict(key_name='fruit', value_name='color') }}
+* {{ default | combine(patch, list_merge='append') }} 
+	* add __patch__ to **default** list
+* {{ default | combine(patch, list_merge='prepend') }}
+* {{ default | combine(patch, list_merge='append_rp') }}
+	* add __patch__ to **default** list and remove previous hash
+* {{ default | combine(patch, list_merge='prepend_rp') }}
 
 ### Useful Commands
 * ansible-doc -t lookup -l (list all lookup plugins and small explanation!)
@@ -42,4 +54,7 @@
 
 ## Notes
 1. Discovered a loop Alternative to json_query, using dict2items. In implementation as ALT
-2. Maybe that is what happens in the background when **ansible.cfg** has the option ***stdout_callback = yaml*** set.
+2. Maybe that is what happens in the background when **ansible.cfg** has the option ***stdout_callback = yaml*** set?
+
+---
+[^examples]: examples can be found in [Ansible Docs](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#formatting-data-yaml-and-json)
