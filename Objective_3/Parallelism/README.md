@@ -12,7 +12,13 @@
 ### Useful Modules
 * command:
 	* cmd:
-* async_status:
+* async: (Module Level)
+	* (# of seconds to finish)
+* poll: (Module Level)
+	* (# of seconds polling happens)
+* serial: (Header Level)
+	* 
+* async_status: (read the docs)
 	* jid:
 	* mode: (status/cleanup)
 

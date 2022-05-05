@@ -64,6 +64,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 ---
 ## EXTRA
 1. [Use Plugins](Extra/Plugins)
+2. [Use ACL](Extra/ACL)
 
 
 [^note]: As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.
