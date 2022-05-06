@@ -1,0 +1,32 @@
+---
+- name: remove everything created by specialbits.yml
+  hosts: all
+  vars:
+    users:
+      - username: sveta
+        groupname: managers
+      - username: masha
+        groupname: managers
+      - username: misha
+        groupname: workers
+  tasks:
+    - name: delete the users
+      user:
+        state: absent
+        name: "{{ item.username }}"
+        force: True
+        remove: True
+      loop: "{{ users }}"
+
+    - name: remove groups
+      group:
+        state: absent
+        name: "{{ item }}"
+      loop:
+        - managers
+        - workers
+
+    - name: Remove /tmp/devel
+      file:
+        state: absent
+        path: /tmp/devel

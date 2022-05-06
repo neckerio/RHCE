@@ -1,0 +1,95 @@
+---
+- name: Just doing this to remember the silly bits
+  hosts: all
+  vars:
+    users:
+      - username: sveta
+        groupname: managers
+      - username: masha
+        groupname: managers
+      - username: misha
+        groupname: workers
+  tasks:
+    - name: create necessary groups
+      group:
+        state: present
+        name: "{{ item }}"
+      loop:
+        - managers
+        - workers
+
+    - name: create users
+      user:
+        name: "{{ item.username }}"
+        password: "{{ 'vagrant' | password_hash('sha512','randomsalt') }}"
+        groups: "{{ item.groupname }}"
+      loop: "{{ users }}"
+
+    - name: create directory with SGID and Sticky set
+      file:
+        state: directory
+        path: /tmp/devel
+        owner: vagrant
+        group: managers
+        mode: 3770
+
+    - name: create a link to something for fun
+      file:
+        state: link
+        src: /etc/ssh
+        path: /tmp/devel/ssh
+
+- name: Practice ACL's AGAIN, just because the tendency is to forget boring things
+  hosts: all
+  tasks: 
+    - name: Create ACL for "USER" because it acts strange without it
+      acl:
+        state: present
+        path: /tmp/devel
+        etype: user
+        permissions: rwx
+        recursive: True
+    - name: Create DEFAULT ACL for "USER" because it acts strange without it
+      acl:
+        state: present
+        default: True
+        path: /tmp/devel
+        etype: user
+        permissions: rwx
+        recursive: True
+
+    - name: Create ACL for "MANAGERS"
+      acl:
+        state: present
+        path: /tmp/devel
+        etype: group
+        entity: managers
+        permissions: rwx
+        recursive: True
+    - name: Create DEFAULT ACL for "MANAGERS"
+      acl:
+        state: present
+        default: True
+        path: /tmp/devel
+        etype: group
+        entity: managers
+        permissions: rwx
+        recursive: True
+
+    - name: Create ACL for "WORKERS"
+      acl:
+        state: present
+        path: /tmp/devel
+        etype: group
+        entity: workers
+        permissions: rx
+        recursive: True
+    - name: Create DEFAULT ACL for "WORKERS"
+      acl:
+        state: present
+        default: True
+        path: /tmp/devel
+        etype: group
+        entity: workers
+        permissions: rx
+        recursive: True
