@@ -1,6 +1,6 @@
 # NFS/Samba
 
-## Objective EXTRA:
+## Objective EXTRA
 	* setup Samba on Host Node
 	* use Samba on Remote Nodes
 
@@ -29,6 +29,10 @@
 
 
 ### Useful Modules
+* assert:
+	* that:
+	* fail_msg:
+	* success_msg:
 
 ### Useful Commands
 * showmount (show mount info for nfs server)

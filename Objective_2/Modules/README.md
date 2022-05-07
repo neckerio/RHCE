@@ -381,6 +381,12 @@
 	* permissions: (rwx)
 	* recursive: BOOL
 	* state: (a/p query)
+13. used in [NFS and Samba](Extra/NFS_Samba)
+* assert:
+	* that:
+	* fail_msg:
+	* success_msg:
+ 
  
 
 
