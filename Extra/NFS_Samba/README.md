@@ -1,12 +1,14 @@
 # NFS/Samba
 
 ## Objective EXTRA
-	* setup Samba on Host Node
-	* use Samba on Remote Nodes
+* setup Samba on Host Node
+* use Samba on Remote Nodes
 
 ---
 
 ### Implementation
+* [nfs_server.yml](nfs_server.yml)
+* [nfs_client.yml](nfs_client.yml)
 
 ### Useful Information
 #### nfs
