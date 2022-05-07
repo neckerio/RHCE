@@ -1,0 +1,68 @@
+---
+- name: configure Remote Nodes to connect to NFS server on the Host Node
+  hosts: all
+  tasks:
+    - name: first download necessary packages
+      dnf:
+        name:
+          - nfs-utils
+          - autofs
+        state: latest
+
+    - name: use showmount to verify NFS server "/data" is available on Host Node
+      command:
+        cmd: "showmount -e 192.168.56.7"
+      register: showmount
+
+    - name: verify that showmount returns "/data"
+      assert:
+        that: "'/data' in showmount.stdout"
+        fail_msg: "could not find /data"
+        success_msg: "FOUND IT!"
+
+    - name: create mount point on client side for "/data"
+      file:
+        state: directory
+        path: /nfs
+
+    - name: mount the NFS server using /etc/fstab
+      mount:
+        boot: True
+        state: mounted
+        src: "192.168.56.7:/data"
+        path: /nfs
+        fstype: nfs
+        opts: _netdev
+
+    - name: use "vdir" cmd to verify everything is in order
+      command:
+        cmd: "vdir /nfs"
+      register: vdir
+
+    - name: verify /data is mounted on /nfs
+      assert:
+        that: "'dir1' and 'file5' in vdir.stdout"
+        fail_msg: "Didn't work man"
+        success_msg: "ALL CONNECTED! Try testing that _netdev and Rebooting!"
+
+    - name: reboot to test _netdev option
+      reboot:
+
+- name: For our last trick, we will add files to the NFS server
+  hosts: all
+  tasks:
+    - name: create a file on the NFS server
+      file:
+        state: touch
+        path: /nfs/from_{{ ansible_hostname }}
+        owner: vagrant
+        group: vagrant
+
+    - name: verify that it worked
+      command:
+        cmd: "vdir /nfs"
+      register: vdir
+
+    - name: debugging vdir
+      debug:
+        var: vdir.stdout

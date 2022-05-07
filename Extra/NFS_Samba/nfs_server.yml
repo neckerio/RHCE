@@ -1,0 +1,96 @@
+---
+- name: setting up NFS on localhost for remote nodes to connect to
+  hosts: localhost
+  tasks:
+    - name: first install necessary packages for NFS
+      dnf:
+        name:
+          - nfs-utils
+          - autofs
+        state: latest
+
+    - name: start the nfs-server service
+      service:
+        name: nfs-server
+        state: started
+        enabled: True
+
+    - name: make folder /data that NFS will mount to
+      file:
+        state: directory
+        path: /data
+        owner: vagrant
+        group: vagrant
+
+    - name: add line into nfs export tables; no_root_squash option is UNSAFE
+      lineinfile:
+        path: /etc/exports
+        line: "/data *(rw,no_root_squash)"
+        state: present
+
+    - name: open up firewalld services
+      firewalld:
+        service: "{{ item }}"
+        state: enabled
+        permanent: True
+        immediate: True
+      loop:
+        - nfs
+        - mountd
+        - rpc-bind
+      notify: restart
+
+    - name: verify firewalld
+      command:
+        cmd: "firewall-cmd --list-all"
+      register: firewalld
+
+    - name: verify nfs-server is running
+      command:
+        cmd: "systemctl status nfs-server"
+      register: nfs_server
+
+    - name: debugging firewalld and nfs-server
+      debug:
+        var: "{{ item }}"
+      loop:
+        - firewalld.stdout
+        - nfs_server.stdout
+
+    - name: create test documents on the NFS server
+      file:
+        path: "{{ item.path }}"
+        state: "{{ item.state }}"
+        owner: vagrant
+        group: vagrant
+      loop:
+        - path: /data/dir1
+          state: directory
+        - path: /data/dir2
+          state: directory
+        - path: /data/dir3
+          state: directory
+        - path: /data/dir4
+          state: directory
+        - path: /data/dir5
+          state: directory
+        - path: /data/file1
+          state: touch
+        - path: /data/file2
+          state: touch
+        - path: /data/file3
+          state: touch
+        - path: /data/file4
+          state: touch
+        - path: /data/file5
+          state: touch
+
+
+  handlers:
+    - name: restart
+      service:
+        state: restarted
+        name: "{{ item }}"
+      loop:
+        - nfs-server
+        - firewalld
