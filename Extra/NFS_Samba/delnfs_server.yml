@@ -1,0 +1,62 @@
+---
+- name: remove all changes made by nfs_server.yml
+  hosts: localhost
+  tasks:
+    - name: delete the NFS server DIRECTORY
+      file:
+        state: absent
+        path: /data
+          
+    - name: stop the NFS service
+      service:
+        name: nfs-server
+        state: stopped
+        enabled: False
+
+    - name: clear out the /etc/export file
+      lineinfile:
+        path: /etc/exports
+        regexp: "^/data"
+        state: absent
+
+    - name: verify that the entry has been deleted from /etc/exports
+      command:
+        cmd: "cat /etc/exports"
+      register: exports
+    
+    - name: close down the firewalld services
+      firewalld:
+        service: "{{ item }}"
+        state: disabled
+        permanent: True
+        immediate: True
+      loop:
+        - nfs
+        - mountd
+        - rpc-bind
+      notify: restart
+
+    - name: verify the firewalld settings
+      command:
+        cmd: "firewall-cmd --list-all"
+      register: firewalld
+
+    - name: debugging exports and firewalld
+      debug:
+        var: "{{ item }}"
+      loop:
+        - firewalld.stdout
+        - exports.stdout
+
+    - name: lastly remove the packages
+      dnf:
+        name:
+          - nfs-utils
+          - autofs
+        state: absent
+
+  handlers:
+    - name: restart
+      service:
+        name: firewalld
+        state: restarted

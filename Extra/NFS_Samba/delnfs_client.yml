@@ -1,0 +1,36 @@
+---
+- name: remove all changes made by nfs_client.yml
+  hosts: all
+  tasks:
+    - name: remove the file from the NFS server
+      file:
+        state: absent
+        path: /nfs/from_{{ ansible_hostname }}
+
+    - name: verify that it successfully removed the file
+      command:
+        cmd: "vdir /nfs"
+      register: vdir
+
+    - name: debugging vdir
+      debug:
+        var: vdir.stdout
+
+    - name: unmount and remove the NFS server from /etc/fstab
+      mount:
+        state: absent
+        src: "192.168.56.7:/data"
+        path: /nfs
+        fstype: nfs
+
+    - name: remove the mount point created for the NFS server
+      file:
+        state: absent
+        path: /nfs
+
+    - name: lastly remove the packages
+      dnf:
+        name:
+          - nfs-utils
+          - autofs
+        state: absent
