@@ -8,7 +8,9 @@
 
 ### Implementation
 * [nfs_server.yml](nfs_server.yml)
+* [delnfs_server.yml](delnfs_server.yml)
 * [nfs_client.yml](nfs_client.yml)
+* [delnfs_client.yml](delnfs_client.yml)
 
 ### Useful Information
 #### nfs
