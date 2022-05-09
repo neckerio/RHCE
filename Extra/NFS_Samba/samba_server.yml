@@ -54,6 +54,30 @@
         permanent: True
       notify: restart
 
+    - name: create some files to fill up and test the Samba server
+      file:
+        state: "{{ item.state }}" 
+        path: "{{ item.path }}"
+        owner: vagrant
+        group: vagrant
+      loop:
+        - path: /samba/smb1
+          state: touch
+        - path: /samba/smb2
+          state: touch
+        - path: /samba/smb3
+          state: touch
+        - path: /samba/smb4
+          state: touch
+        - path: /samba/smbdir1
+          state: directory
+        - path: /samba/smbdir2
+          state: directory
+        - path: /samba/smbdir3
+          state: directory
+        - path: /samba/smbdir4
+          state: directory
+
   handlers:
     - name: restart
       service:
@@ -62,3 +86,22 @@
       loop:
         - firewalld
         - smb
+
+- name: handle the selinux part of the equation
+  hosts: localhost
+  tasks:
+    - name: first set the file context
+      sefcontext:
+        setype: "public_content_rw_t"
+        state: present
+        target: /samba
+
+    - name: running necessary command for sefcontext
+      command:
+        cmd: "restorecon -v -R /samba(/.*)?"
+
+    - name: set a possibly relevant seboolean
+      seboolean:
+        persistent: True
+        state: True
+        name: samba_export_all_rw

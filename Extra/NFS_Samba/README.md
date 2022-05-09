@@ -93,7 +93,14 @@
 * samba
 * cifs-utils (for samba)
 * autofs (automount)
+* dnf groups install "Network File system Client"
 
 ---
 
 ## Notes
+1. Samba server will need to handle a few SELinux variables; an seboolean and an fcontext
+2. It may be possible to condense both of those into a single command "semanage permissive -a smbd_t" [^manpage] and just allow all processes.
+
+---
+[^manpage]: Helpful manpage from [linux.die.net](https://linux.die.net/man/8/samba_selinux)
+

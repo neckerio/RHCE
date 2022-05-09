@@ -33,4 +33,5 @@
         opts: "_netdev,username=samba,password=samba"
         fstype: cifs
 
-       ## CONTINUE HERE WITH SELINUX
+    - name: reboot to verify all is okay and persistent
+      reboot:
