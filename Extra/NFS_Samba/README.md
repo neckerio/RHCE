@@ -13,6 +13,11 @@
 * [delnfs_client.yml](delnfs_client.yml)
 * ^ may need to review the idempotency of these.
 
+* [samba_server](samba_server.yml)
+* [delsamba_server](delsamba_server.yml)
+* [samba_client](samba_client.yml)
+* [delsamba_client](delsamba_client.yml)
+
 ### Useful Information
 #### nfs
 * used for creating a smb, shared-like server/blk
