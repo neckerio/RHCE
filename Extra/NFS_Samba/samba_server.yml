@@ -1,0 +1,64 @@
+---
+- name: set up a Samba server on the localhost
+  hosts: localhost
+  tasks: 
+    - name: download the necessary packages
+      dnf:
+        name:
+          - samba
+          - autofs
+        state: latest
+
+    - name: create the samba user
+      user:
+        name: samba
+        password: "{{ 'vagrant' | password_hash('sha512', 'randomsalt') }}"
+
+    - name: create the directory necessary for the server
+      file:
+        state: directory
+        path: /samba
+        owner: samba
+        group: samba
+        mode: 0770
+
+    - name: start the smbd service
+      service:
+        name: smb
+        state: started
+        enabled: True
+
+    - name: create a samba server password
+      shell:
+        cmd: |
+          smbpasswd -a samba -s<<EOF
+          samba
+          samba
+          EOF
+
+    - name: configure samba server
+      blockinfile:
+        path: /etc/samba/smb.conf
+        insertafter: EOF
+        block: | 
+          [samba]
+                  comment = samba share
+                  path = /samba
+                  write list = samba
+
+    - name: open up firewall for samba
+      firewalld:
+        service: samba
+        state: enabled
+        immediate: True
+        permanent: True
+      notify: restart
+
+  handlers:
+    - name: restart
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - firewalld
+        - smb

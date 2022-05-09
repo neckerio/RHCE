@@ -1,0 +1,36 @@
+---
+- name: configure managed nodes as samba clients
+  hosts: all
+  tasks:
+    - name: download necessary packages
+      dnf:
+        name: "@Network File System Client"
+        state: latest
+
+    - name: verify client exists
+      shell:
+        cmd: |
+          smbclient -L 192.168.56.7<<EOF
+          yes
+          EOF
+      register: smb
+
+    - name: debugging smb
+      debug:
+        var: smb.stdout
+
+    - name: create a mountpoint for Samba on client nodes
+      file:
+        state: directory
+        path: /smbmnt
+
+    - name: mount the Samba server on Client nodes
+      mount:
+        boot: True
+        state: mounted
+        src: "//192.168.56.7/samba"
+        path: /smbmnt
+        opts: "_netdev,username=samba,password=samba"
+        fstype: cifs
+
+       ## CONTINUE HERE WITH SELINUX

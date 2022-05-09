@@ -11,6 +11,7 @@
 * [delnfs_server.yml](delnfs_server.yml)
 * [nfs_client.yml](nfs_client.yml)
 * [delnfs_client.yml](delnfs_client.yml)
+* ^ may need to review the idempotency of these.
 
 ### Useful Information
 #### nfs
@@ -29,7 +30,7 @@
 * autofs (automount) mounts the directory when you use it and unmounts it when it isn't used for a time
 *  in automount you always have to components in the directory name of the mount (/data/files=fullname, do /data in /etc/auto.master) (files=relative file name, in /etc/auto.data)
 * ensure autofs service is started (systemctl)
-* 
+* smbpasswd needs to be run as root to add user 
 
 
 ### Useful Modules
