@@ -1,0 +1,40 @@
+---
+- name: remove changes made by samba_server.yml
+  hosts: localhost
+  tasks:
+    - name: remove the samba directory and files
+      file:
+        state: absent
+        path: /samba
+
+    - name: remove samba from firewalld
+      firewalld:
+        service: samba
+        state: disabled
+        immediate: True
+        permanent: True
+
+    - name: remove the samba user
+      user:
+        name: samba
+        state: absent
+        force: True
+        remove: True
+
+    - name: remove added block from samba conf
+      blockinfile:
+        path: /etc/samba/smb.conf
+        state: absent
+        block: |
+          [samba]
+                  comment = samba share
+                  path = /samba
+                  write list = samba
+
+
+    - name: remove packages
+      dnf:
+        name:
+          - samba
+          - autofs
+        state: absent

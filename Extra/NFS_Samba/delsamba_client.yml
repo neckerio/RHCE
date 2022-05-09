@@ -1,0 +1,21 @@
+---
+- name: remove all the changes made by samba_client.yml
+  hosts: all
+  tasks:
+    - name: unmount the samba server
+      mount:
+        state: absent
+        fstype: cifs
+        path: /smbmnt
+        src: "//192.168.56.7/samba"
+
+    - name: delete mnt directory from client nodes
+      file:
+        state: absent
+        path: /smbmnt
+
+    - name: remove cifs packages
+      dnf:
+        name: "@Network File System Client"
+        state: absent
+
