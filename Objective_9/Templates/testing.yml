@@ -1,0 +1,59 @@
+---
+- name: testing out jinja2 templates beyond usefulness.
+  vars_files:
+    - dictionary.yml
+  vars: 
+    keyword: alskjf
+    dicta:
+      masha:
+        username: masha
+        groupname: manager
+      misha:
+        username: misha
+        groupname: worker
+      sveta:
+        username: sveta
+        groupname: manager
+  hosts: all
+  tasks: 
+    - name: use keyword to test "IS" keyword with BOOL and STRING
+      command:
+        cmd: "echo {{ keyword }}"
+      register: echo
+      when: (keyword is boolean) or (keyword is string)
+
+    - name: debugging echo
+      debug:
+        var: echo.stdout
+
+    - name: use a condition to test LIST
+      command:
+        cmd: "echo {{ inter }}"
+      register: echo2
+      when: inter is iterable
+
+    - name: debugging echo2
+      debug:
+        var: echo2.stdout
+
+    - name: user a condition to test DICTIONARY
+      command:
+        cmd: "echo {{ interfaces }}"
+      register: echo3
+      when: interfaces is iterable
+
+    - name: debugging echo3
+      debug:
+        var: echo3.stdout
+
+    - name: testing out if different ways to loop are possible
+      command:
+        cmd: " echo {{ item.description }}"
+      loop:
+        - "{{ interfaces.Ethernet1 }}"
+        - "{{ interfaces.Ethernet2 }}"
+      register: loops
+
+    - name: debugging loops
+      debug:
+        var: loops.stdout

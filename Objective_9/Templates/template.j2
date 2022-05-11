@@ -1,0 +1,5 @@
+{% for i in interfaces %}
+interface {{ i }}
+	description {{ interfaces[i].description }}
+	ip address {{ interfaces[i].ipv4_address }}
+{% endfor %}

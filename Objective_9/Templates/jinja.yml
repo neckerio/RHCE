@@ -1,0 +1,15 @@
+---
+- name: testing jinja templates
+  vars_files:
+    - dictionary.yml
+  hosts: all
+  tasks:
+    - name: template using dictionary.yml into /tmp/dict. Testing dict
+      template:
+        src: dict.j2
+        dest: /tmp/dict
+
+    - name: template using dictionary.yml into /tmp/list. Testing list
+      template:
+        src: list.j2
+        dest: /tmp/list

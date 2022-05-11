@@ -363,10 +363,11 @@
 * when:
 * changed_when:
 11. used in [Error_Handling](Objective_6/Error_Handling)
-* block:
+* block: (must be placed a lvl above task)
 	* rescue:
 	* always:
 * fail:
+	* msg:
 * failed_when:
 * ignore_fails:
 * force_handlers:
@@ -384,7 +385,7 @@
 13. used in [NFS and Samba](Extra/NFS_Samba)
 * assert:
 	* that:
-	* fail_msg:
+	* fail_msg: (stops play)
 	* success_msg:
  
  

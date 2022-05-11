@@ -111,3 +111,21 @@
 ---
 
 ## Notes
+1. Test **is boolean** works with keyword:value paris defined as "True/False". They also evaluate to true with:
+	* **is number**
+	* **True == 1**
+	* **False == 0**
+2. Maybe useful -- using the following learn how tests get parsed:
+
+```yaml
+when: keyword is == 0
+```
+
+* returns
+	* the conditional check 'keyword is == 0' failed. The error was: templating error while templating string: expected token 'name', got '=='. String:
+
+
+```yaml
+{% if keyword is ==0 %} True {% else %} False {% endif %}
+```
+

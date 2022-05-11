@@ -1,0 +1,5 @@
+{% for i in inter %}
+interface: {{ i.interface }}
+	description: {{ i.description }}
+	ip address: {{ i.ipv4_address }}
+{% endfor %}
