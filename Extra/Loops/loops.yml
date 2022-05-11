@@ -1,0 +1,35 @@
+---
+- name: testing out loops
+  vars: 
+    dicta:
+      masha:
+        username: masha
+        groupname: manager
+      misha:
+        username: misha
+        groupname: worker
+      sveta:
+        username: sveta
+        groupname: manager
+  hosts: all
+  tasks: 
+    - name: testing loop_control, label
+      debug:
+        msg: "{{ item.value.groupname }}"
+      loop: "{{ dicta | dict2items }}"
+      loop_control:
+        label: "{{ item.value.username }}"
+
+    - name: testing loop_control, index_var
+      debug:
+        msg: "{{ item.value.username }} who is at index[{{ index }}]"
+      loop: "{{ dicta | dict2items }}"
+      loop_control:
+        index_var: index
+
+    - name: testing loop_control, pause
+      debug:
+        msg: "ATTENTION: Pausing after each groupname. Current groupname is {{ item.value.groupname }}"
+      loop: "{{ dicta | dict2items }}"
+      loop_control:
+        pause: 3

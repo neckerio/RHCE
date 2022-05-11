@@ -4,16 +4,6 @@
     - dictionary.yml
   vars: 
     keyword: alskjf
-    dicta:
-      masha:
-        username: masha
-        groupname: manager
-      misha:
-        username: misha
-        groupname: worker
-      sveta:
-        username: sveta
-        groupname: manager
   hosts: all
   tasks: 
     - name: use keyword to test "IS" keyword with BOOL and STRING
@@ -58,9 +48,3 @@
       debug:
         msg: "{{ item.stdout }}"
       loop: "{{ loops.results }}"
-
-    - name: testing out these ansible vars
-      debug:
-        msg: "{{ ansible_loop.allitems }}"
-      loop: "{{ dicta | dict2items }}"
-

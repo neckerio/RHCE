@@ -13,8 +13,13 @@
 ### Useful Information
 
 ### Useful Modules
-* template:
 * register:
+* loop:
+* loop_control: (same level as others)
+	* label: (limit the displayed output)
+	* pause: (pause time in seconds between loops)
+	* index_var: (track where you are in the loop)
+	* extended: yes (ansible 2.8 get extended loop information)
 
 ### Useful Commands
 
