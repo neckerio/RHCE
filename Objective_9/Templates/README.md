@@ -101,6 +101,7 @@
 
 ### Useful Modules
 * template:
+* register:
 
 ### Useful Commands
 

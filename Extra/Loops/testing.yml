@@ -36,7 +36,7 @@
       debug:
         var: echo2.stdout
 
-    - name: user a condition to test DICTIONARY
+    - name: use a condition to test DICTIONARY
       command:
         cmd: "echo {{ interfaces }}"
       register: echo3
@@ -48,14 +48,19 @@
 
     - name: testing out if different ways to loop are possible
       command:
-        cmd: " echo {{ item.description }}"
+        cmd: " echo information: {{ item.description }} and {{ item.ipv4_address }}"
       loop:
-        - "{{ interfaces.Ethernet1 }}"
+        - "{{ interfaces['Ethernet1'] }}"
         - "{{ interfaces.Ethernet2 }}"
       register: loops
 
-    - name: debugging loops
+    - name: debugging loops, practice looping over register with loop data structure
       debug:
-        var: loops.stdout
+        msg: "{{ item.stdout }}"
+      loop: "{{ loops.results }}"
 
-  # I was just looking for a different/easier way to access hostvars/ansible_facts that in in nested dictionary/lists. I can use dict2items but this was also exploratory. Pick up here tomorrow
+    - name: testing out these ansible vars
+      debug:
+        msg: "{{ ansible_loop.allitems }}"
+      loop: "{{ dicta | dict2items }}"
+
