@@ -57,3 +57,5 @@
     - name: debugging loops
       debug:
         var: loops.stdout
+
+  # I was just looking for a different/easier way to access hostvars/ansible_facts that in in nested dictionary/lists. I can use dict2items but this was also exploratory. Pick up here tomorrow
