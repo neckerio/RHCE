@@ -1,0 +1,35 @@
+---
+- name: showing that the same/similar info displays output differently using different access methods
+  vars_files: dictionary.yml
+  var:
+    dicta:
+      masha:
+        username: masha
+        groupname: manager
+      misha:
+        username: misha
+        groupname: worker
+      sveta:
+        username: sveta
+        groupname: manager
+  hosts: all
+  tasks:
+    - name: test dictionary.yml loops of lists of dictionaries
+      debug:
+        msg: "Information: {{ item.description }} and {{ item.ipv4_address }}"
+      loop:
+        - "{{ interfaces['Ethernet1'] }}"
+        - "{{ interfaces.Ethernet2 }}"
+
+    - name: testing output of dicta
+      debug:
+        msg: "{{ item.value }}"
+      loop: "{{ dicta | dict2items }}"
+
+    - name: testing out dicta as loop dictionary
+      debug: 
+        msg: "{{ item.username }} in {{ item.groupname }}"
+      loop:
+        - "{{ dicta.masha }}"
+        - "{{ dicta.misha }}"
+        - "{{ dicta.sveta }}"

@@ -1,0 +1,21 @@
+---
+- name: testing different acccess methods for facts, ip addresses
+  hosts: all
+  tasks:
+    - name: try regular ansible_facts first
+      debug:
+        msg: "{{ ansible_facts['all_ipv4_addresses'] }}"
+      when: True
+
+    - name: assert to find what type of stdout the fact above returns
+      assert:
+        that: "{{ ansible_facts['all_ipv4_addresses'] }} is iterable"
+        fail_msg: it ISN'T iterable and not a mapping (dictionary)
+        success_msg: it IS iterable and not a mapping (dictionary)
+      when: ansible_facts.all_ipv4_addresses is not mapping
+
+    - name: try looping over it like a list and skipping any IPs that start with 10.
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ ansible_facts['all_ipv4_addresses'] }}"
+      when: "'10' not in item"

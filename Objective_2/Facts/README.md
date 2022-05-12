@@ -9,6 +9,9 @@
 
 ---
 
+### Implementation
+* [facts_loop.yml](facts_loop.yml)
+
 ### Useful Commands
 * INJECT_FACTS_AS_VARS
 * ansible all -m setup -a "filter=ansible_all_ipv4_addresses" (for virtualbox two)
