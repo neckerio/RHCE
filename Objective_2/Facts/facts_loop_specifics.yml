@@ -1,0 +1,26 @@
+---
+- name: Testing loops to access specifics from ansible_facts
+  hosts: all
+  tasks:
+    - name: block that will fail, showing the wrong way to try to access specifics
+      block:
+        - name: cause block rescue by trying to get info nested deeper in a loop
+          debug:
+            msg: "{{ item }}"
+          loop: "{{ ansible_facts['devices']['sda']['partitions']['links'] }}"
+          loop_control:
+            label: "{{ item }}"
+
+      rescue:
+        - name: access specifics nested deeper in a loop
+          debug:
+            msg: "{{ item.key }}'s UUID is {{ ansible_facts['devices'][item.key]['links']['uuids'] | join(' ') }} and has a size of {{ ansible_facts['devices'][item.key]['size'] }}"
+          loop: "{{ ansible_facts['devices'] | dict2items }}"
+          loop_control:
+            label: "{{ item }}"
+
+      always:
+        - name: display LVM as an always
+          debug:
+            msg: "{{ item }}"
+          loop: "{{ ansible_facts['lvm'] | dict2items }}"

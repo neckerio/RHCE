@@ -1,0 +1,23 @@
+---
+- name: testing INI and .fact format output
+  hosts: all
+  tasks:
+    - name: look at group_vars, displayed as they are input - hashes
+      debug:
+        msg: "{{ hostvars }}"
+
+    - name: create /etc/ansible/facts.d
+      file:
+        state: directory
+        path: /etc/ansible/facts.d
+
+    - name: create a .fact file - INI
+      blockinfile:
+        state: present
+        create: True
+        path: /etc/ansible/facts.d/package.fact
+        block: |
+          [packages]
+          web = httpd
+          ftp = vsftpd
+          editor = vim

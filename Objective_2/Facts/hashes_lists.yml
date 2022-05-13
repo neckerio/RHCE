@@ -1,0 +1,37 @@
+---
+- name: display different ways to input hashes and lists
+  vars:
+    dicta: {katya: {username: katya, groupname: sysadmin}, jhenya: {username: jhenya, groupname: manager}, nastya: {username: nastya, groupname: developer}}
+    hash:
+      misha:
+        username: misha
+        groupname: developer
+      masha:
+        username: masha
+        groupname: manager
+      sveta:
+        username: sveta
+        groupname: manager
+    positions: ['sysadmin', 'developer', 'manager']
+    mix: {sasha: {username: sasha, groupname: ['developer','manager']}, alyona: {username: alyona, groupname: ['sysadmin','manager']}}
+  hosts: all
+  tasks:
+    - name: testing out groups, a [bracketed] list
+      debug:
+        msg: "The positions available are {{ item }}"
+      loop: "{{ positions }}"
+
+    - name: testing out dicta, a hash of hashes
+      debug:
+        msg: "{{ item.key }} is a {{ item.value.groupname }}"
+      loop: "{{ dicta | dict2items }}"
+
+    - name: testing out hash, a regular hash
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ hash | dict2items }}"
+
+    - name: testing out mix, a hash of hashes with lists (ansible_facts layout)
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ mix | dict2items }}"
