@@ -20,6 +20,7 @@
 	* pause: (pause time in seconds between loops)
 	* index_var: (track where you are in the loop)
 	* extended: yes (ansible 2.8 get extended loop information)
+	* loop_var: specify the var name (item) for each loop (nested loops)
 
 ### Useful Commands
 

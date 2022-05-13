@@ -26,6 +26,12 @@
 
 
 ### Useful Plugins/Filters [^examples]
+* {{ list | join(" ") }}
+	* used to manipulate strings, can be used to get rid of the [] around list
+* {{ csv_string | split(",") }}
+	* opposite of above
+* {{ [3, [4, 2] ] | flatten }}
+	* manipulate lists of lists
 * {{ myvar | type_debug }}
 * {{ dict | dict2items }}
 * {{ files | dict2items(key_name='file', value_name='path') }}
