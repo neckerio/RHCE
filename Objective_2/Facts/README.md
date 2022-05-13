@@ -11,6 +11,9 @@
 
 ### Implementation
 * [facts_loop.yml](facts_loop.yml)
+* [facts_loop_specifics.yml](facts_loop_specifics.yml)
+* [hashes_lists.yml](hashes_lists.yml)
+* [local_vars.yml](local_vars.yml)
 
 ### Useful Commands
 * INJECT_FACTS_AS_VARS
@@ -25,6 +28,7 @@
 * ansible all -m setup -a "filter=ansible_device_links" (partition uuid/labels/~hardware)
 * ansible all -m setup -a "filter=ansible_devices" (partition sizes/uuids/labels)
 * ansible all -m setup -a "filter=ansible_mounts"
+* ansible all -m setup -a "filter=ansible_lvm"
 
 
 * ansible all -m setup -a "filter=ansible_date_time"
@@ -93,6 +97,10 @@ ansible all -m setup -a "filter=ansible_local"
 ---
 
 ## Notes
+1. When trying to retrieve ansible_facts, and troubleshooting, pay attention to the structure of the ansible_fact ouput. A common problem is that the attributes that are being accessed are on the same level and can't see each other. 
+2. It is also possible to loop for specificity. That is return a loop item in a larger message that will display specifics of each loop item. In implementation.
+3. Remember the obvious, item.value works on hashes/dictionaries
+4. Local facts and group_vars/host_vars are both displayed as hashes. X_vars are written as hashes and .fact files are in INI format. In implementation
 
 
 ---
