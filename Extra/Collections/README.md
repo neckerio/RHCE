@@ -10,6 +10,11 @@
 ### Useful Modules
 
 ### Useful Commands
+* ansible-galaxy collection install my_namespace.my_collection
+* ansible-galaxy collection install my_namespace-my_collection-1.0.0.tar.gz -p ./collections (tarballs)
+	* When using the -p option to specify the install path, use one of the values configured in COLLECTIONS_PATHS, as this is where Ansible itself will expect to find collections.
+* ansible-galaxy collection install my_namespace.my_collection --upgrade (upgrade)
+* ansible-galaxy collection install my_namespace.my_collection:==1.0.0-beta.1 (diff version)
 
 ### Useful Directories/Files
 
