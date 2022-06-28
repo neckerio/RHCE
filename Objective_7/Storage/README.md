@@ -100,3 +100,12 @@
 blkid | awk '/lvthree/{ print $2 }' | cut -d ' ' -f 2
 ```
 
+13. **mount:** module can not be written to mount a SWAP file using a playbook for some strange reason; However, it can be accomplished using an AD HOC command followed by a SWAPON command. Link on the topic from [Ansible Support.](https://github.com/ansible/ansible/issues/29647)
+```zsh
+ansible all -m mount -a 'src=/dev/sdb3 path=none fstype=swap opts=sw state=present'
+```
+
+```zsh
+swapon -a
+```
+
