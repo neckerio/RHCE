@@ -109,3 +109,14 @@ ansible all -m mount -a 'src=/dev/sdb3 path=none fstype=swap opts=sw state=prese
 swapon -a
 ```
 
+1. Using the **thinpool:** attribute requires a bit of preperation. Useful steps from [RHEL.](https://blog.purestorage.com/purely-technical/data-reduction-deep-dive-is-thin-provisioning-data-reduction/)
+	* use **lvol:** to create a THIN POOL first
+		- vg: (name)
+		- thinpool: (name)
+		- size: 
+	* use **lvol:** to creat a THIN VOLUME in the pool defined above
+		- vg:
+		- lv:
+		- thinpool:
+		- size:
+
