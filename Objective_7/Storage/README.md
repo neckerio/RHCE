@@ -121,3 +121,4 @@ swapon -a
 		- size:
 15. Snapshots of THIN POOL LVs are NOT supported but increasing volume capacity works.
 
+16. Haven't found a way, if it is possible, to add two VGs together
