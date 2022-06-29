@@ -122,3 +122,4 @@ swapon -a
 15. Snapshots of THIN POOL LVs are NOT supported but increasing volume capacity works.
 
 16. Haven't found a way, if it is possible, to add two VGs together
+17. Remember when that Device Mapper is probably used when using LVMs and no ansible_facts, to get to UUIDS, seem to require using the ['dm-#'] facts.
