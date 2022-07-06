@@ -38,7 +38,7 @@
 
 * epel-release
 * dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-* ALT ALT EPEL-RELEASE used by CentOS works?
+* ALT ALT EPEL-RELEASE used by CentOS, works?
 * sudo dnf install -y epel-release
 
 
@@ -54,9 +54,9 @@
 ---
 
 ## Notes
-1. Ansible can be install using EPEL or PIP
+1. Ansible can be installed using EPEL or PIP
 2. PIP3 is installed with Python3
-3. PIP3 fails the first time and then accepts the upgrade with sudo
+3. PIP3 fails the first time, and then accepts the upgrade with sudo
 
 
 ---
