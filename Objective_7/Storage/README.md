@@ -123,3 +123,4 @@ swapon -a
 
 16. Haven't found a way, if it is possible, to add two VGs together
 17. Remember when that Device Mapper is probably used when using LVMs and no ansible_facts, to get to UUIDS, seem to require using the ['dm-#'] facts.
+18. **mount:** module's attribute **src:** accepts "UUID=___", when using ansible_facts remember that it may return an ARRAY like "[zeroth,first,second]", remember to choose the ELEMENT needed from the array, "[0]"
