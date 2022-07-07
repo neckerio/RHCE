@@ -10,6 +10,17 @@
 ### Useful Information
 * VDO - Virtual Data Optimizer [^VDO]
 	* A kernel module that can save disk space and reduce replication bandwidth
+		-  provides thin provisioned storage
+		- use logical size 10x the phys size for VMs and containers
+		- use logical size 3x this phys size for object storage 
+		- used in cloud and container environments
+		- it manages deduplicated and compressed storage pools in RHEL8
+		- underlying block devices need to be bigger than 4GiB
+		- mkfs.xfs -K needed! stands for discard, without it will take forever
+		- /etc/fstab needs
+			- x-systemd.requires=vdo.service discard (mount option)
+		- can be created on top of partition
+
 	* VDO sits on top of any block storage device and provides zero-block elimination, deduplication of redundant blocks, and data compression. These are the key phases of the data reduction process that allows VDO to reduce data footprint on storage. [^VDO]
 	*  Virtual Data Optimizer (VDO) provides inline data reduction for Linux in the form of deduplication, compression, and thin provisioning. When you set up a VDO volume, you specify a block device on which to construct your VDO volume and the amount of logical storage you plan to present. [^VDO2]
 		1. **Zero-Block Elimination** - VDO only allows blocks that contain something other than all zeros to filter through to the next phase of processing.
