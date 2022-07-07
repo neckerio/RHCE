@@ -74,8 +74,8 @@
 ---
 
 ## Notes
-1. Mount in /etc/fstab
-	* For XFS
+* Mount in /etc/fstab
+1. For XFS
 
 
 ```
@@ -83,9 +83,7 @@
 ```
 
 
-
-
-	* For EXT4
+2. For EXT4
 
 
 
@@ -95,7 +93,7 @@
 
 
 
-	*  If the VDO volume is located on a block device that requires network, such as iSCSI, add the _netdev mount option. 
+3. If the VDO volume is located on a block device that requires network, such as iSCSI, add the _netdev mount option. 
 
 
 ---
