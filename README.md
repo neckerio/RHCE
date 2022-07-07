@@ -68,7 +68,7 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 3. [Use NFS/Samba](Extra/NFS_Samba)
 4. [Use Loops](Extras/Loops)
 5. [Use_Collections](Extra/Collections)
-6. [Use VDO/Stratis](Extra/VDO_Stratis)
+6. [Use VDO](Extra/VDO)
 
 
 [^note]: As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.
