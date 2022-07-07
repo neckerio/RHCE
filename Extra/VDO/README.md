@@ -61,32 +61,13 @@
 	* udevadm settle (wait for system to register new dev name)
 	* vdostats --human-readable (monitor) 
 
-* Stratis:
-	* systemctl enable --now stratisd
-	* stratis pool create mypool /dev/sdxx
-	* stratis blockdev add-data (add new device later)
-	* stratis fs create mypool myfs1 (XFS automatic)
-	* stratis fs list mypool (show all filesystems in pool)
-	* stratis pool list
-	* stratis filesystem list
-	* stratis blockdev list mypool 
-	* stratis pool add-data mypool /dev/sdx (ad another blockdev)
-	* stratis fs snapshot mypool myfs1 myfs1-snapshot*  mount /stratis/mypool/my-fs-snapshot /mnt (to mount)
-	* stratis filesystem destroy mypool mysnapshot (delete snap)
-	* stratis filesystem destroy mypool myfs (destroy filesystem)
-	* stratis pool destroy mypool (destroy pool when no more fs exist)
-      
 
 ### Useful Directories/Files
 * man vdo (examples)
 * /usr/share/doc/vdo/examples/systemd
-* /etc/crypttab
 * /etc/fstab
-* man crypttab
 
 ### Useful Packages
-* stratisd
-* stratis-cli
 * vdo (may need a reboot)
 * kmod-kvdo (may need a reboot)
 
@@ -95,14 +76,25 @@
 ## Notes
 1. Mount in /etc/fstab
 	* For XFS
+
+
 ```
 /dev/mapper/vdo-name mount-point xfs defaults,x-systemd.device-timeout=0,x-systemd.requires=vdo.service 0 0
 ```
 
+
+
+
 	* For EXT4
+
+
+
 ```
 /dev/mapper/vdo-name mount-point ext4 defaults,x-systemd.device-timeout=0,x-systemd.requires=vdo.service 0 0
 ```
+
+
+
 	*  If the VDO volume is located on a block device that requires network, such as iSCSI, add the _netdev mount option. 
 
 
