@@ -1,4 +1,4 @@
-# Advanced Storage
+# VDO and Stratis
 
 ## Objective Extra
 	* Practice using VDO and Stratis
