@@ -93,7 +93,8 @@
 * /etc/fstab
 
 ### Useful Packages
-* ansible-galaxy collection install community.general
+* ansible-galaxy collection install community.general (vdo)
+* ansible-galaxy collection install ansible.posix (mount)
 * vdo (may need a reboot)
 * kmod-kvdo (may need a reboot)
 
