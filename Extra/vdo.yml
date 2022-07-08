@@ -1,0 +1,60 @@
+---
+- name: Practice using VDO, localhost
+  hosts: localhost
+  tasks:
+    - name: use ansible-galaxy to download necessary collections
+      command:
+        cmd: "{{ item }}"
+      loop:
+          - "ansible-galaxy collection install ansible.posix"
+          - "ansible-galaxy collection install community.general"
+
+- name: VDO practice, remote nodes
+  hosts: all
+  tasks:
+    - name: use the parted module
+      parted:
+        device: /dev/vdb
+        state: present
+        label: gpt
+        number: 1
+        name: one
+        part_end: 100%
+        flags: [lvm]
+
+    - name: download the PyYAML requirement, correct version
+      command:
+        cmd: "pip3 install PyYAML==5.4.1"
+
+    - name: install necessary VDO packages
+      dnf:
+        state: latest
+        name:
+          - vdo
+          - kmod-kvdo
+
+    - name: start the VDO service
+      service:
+        name: vdo
+        state: started
+        enabled: True
+
+    - name: use the vdo module
+      community.general.vdo:
+        state: present
+        device: /dev/vdb1
+        name: vdo1
+
+    - name: use the filesytem module
+      filesystem:
+        fstype: xfs
+        state: present
+        dev: /dev/mapper/vdo1
+
+    - name: use mount
+      mount:
+        state: mounted
+        src: /dev/mapper/vdo1
+        path: /mnt/vdo1
+        fstype: xfs
+        opts: "defaults,x-systemd.device-timeout=0,x-systemd.requires=vdo.service"

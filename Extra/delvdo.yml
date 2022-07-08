@@ -1,0 +1,44 @@
+---
+- name: delete changes made by vdo.yml
+  hosts: all
+  tasks:
+    - name: use mount module 
+      mount:
+        state: absent
+        src: /dev/mapper/vdo1
+        path: /mnt/vdo1
+        fstype: xfs
+        opts: "defaults, x-systemd.device-timeout=0,x-systemd.requires=vdo.service"
+
+    - name: remove filesystem
+      filesystem:
+        state: absent
+        fstype: xfs
+        dev: /dev/mapper/vdo1
+
+    - name: use the VDO module
+      community.general.vdo:
+        name: vdo1
+        state: absent
+        device: /dev/vdb1
+
+    - name: service module
+      service:
+        name: vdo
+        state: stopped
+        enabled: False
+
+    - name: remove the VDO packages 
+      dnf:
+        state: absent
+        name:
+          - vdo
+          - kmod-kvdo
+
+    - name: use parted
+      parted:
+        state: absent
+        device: /dev/vdb
+        label: gpt
+        number: 1
+        name: one

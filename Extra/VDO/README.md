@@ -6,6 +6,8 @@
 ---
 
 ### Implementation
+* [vdo.yml](vdo.yml)
+* [delvdo.yml](delvdo.yml)
 
 ### Useful Information
 * VDO - Virtual Data Optimizer [^VDO]
