@@ -1,7 +1,7 @@
-# VDO and Stratis
+# VDO
 
 ## Objective Extra
-	* Practice using VDO and Stratis
+	* Practice using VDO
 
 ---
 
@@ -60,9 +60,23 @@
 			- RAID, such as LVM RAID, MD RAID, or any other type, above a VDO volume 
 
 ### Useful Modules
+* vdo:
+	* activated: BOOL
+	* compression: ENABLED/DISABLED
+	* deduplication: ENABLED/DISABLED
+	* device: PATH
+	* force: BOOL
+	* growphysical: BOOL
+	* indexmode: spapse/dense
+	* logicalsize: 
+	* name:
+	* running: BOOL
+	* state: present/absent
+	* writepolicy: AUTO/sync/async
 
 ### Useful Commands
 * VDO:
+	* ansible-galaxy collection install community.general
 	* vdo create --name=vdo1 --device=/dev/sdx --vdoLogicalSize=1T 
 	* mkfs.xfs -K /dev/mapper/vdo1 
 		- -K useful for VDO, it speeds up the formatting of XFS filesystems by not sending discard requests at filesystem creation time. It will already be initialized to zero at creation time
@@ -79,6 +93,7 @@
 * /etc/fstab
 
 ### Useful Packages
+* ansible-galaxy collection install community.general
 * vdo (may need a reboot)
 * kmod-kvdo (may need a reboot)
 
