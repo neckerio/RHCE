@@ -149,8 +149,18 @@
 
 
 3. If the VDO volume is located on a block device that requires network, such as iSCSI, add the _netdev mount option. 
+4. Two collections needed to be downloaded for the playbook to work
+```zsh
+ansible-galaxy collection install ansible.posix
+ansible-galaxy collection install community.general
+```
+
+5. A specific version of PyYAML needed to be installed from pip3
+```zsh
+pip3 install PyYAML==5.4.1
+```
 
 
 ---
 [^VDO]: taken from [redhat](https://www.redhat.com/en/blog/understanding-concepts-behind-virtual-data-optimizer-vdo-rhel-75-beta)
-[^VDO]: taken from [redhat](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deduplicating_and_compressing_storage/deploying-vdo_deduplicating-and-compressing-storage)
+[^VDO2]: taken from [redhat](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/deduplicating_and_compressing_storage/deploying-vdo_deduplicating-and-compressing-storage)
