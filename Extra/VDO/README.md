@@ -105,6 +105,9 @@
 	WantedBy = multi-user.target
 ```
 
+
+
+
 	* $ mkfs.xfs -K /dev/mapper/vdo1
 	* $ systemctl daemon-reload; systemctl enable --now vdo1.mount
 	* $ systemctl status vdo1.mount; vdostats --human-readble (verify!)
