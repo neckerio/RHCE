@@ -67,8 +67,9 @@ Objectives from [RedHat](https://www.redhat.com/en/services/training/ex294-red-h
 2. [Use ACL](Extra/ACL)
 3. [Use NFS/Samba](Extra/NFS_Samba)
 4. [Use Loops](Extras/Loops)
-5. [Use_Collections](Extra/Collections)
+5. [Use Collections](Extra/Collections)
 6. [Use VDO](Extra/VDO)
+7. [Use Stratis](Extra/Stratis)
 
 
 [^note]: As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.
