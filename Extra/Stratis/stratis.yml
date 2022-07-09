@@ -1,0 +1,51 @@
+---
+- name: Using mostly the Shell module to review Stratis
+  hosts: all
+  tasks: 
+    - name: download packages
+      dnf:
+        name:
+          - stratisd
+          - stratis-cli
+        state: latest
+
+    - name: start service
+      service:
+        name: stratisd
+        state: started
+        enabled: True
+
+    - name: wipe the signature from target block device
+      command:
+        cmd: 'wipefs --all /dev/vdb'
+
+    - name: create Stratis pool
+      shell:
+        cmd: 'stratis pool create stratispool /dev/vdb; stratis pool'
+      register: pool
+
+    - name: debugging pool
+      debug:
+        var: pool
+
+    - name: create Stratis filesystem
+      shell:
+        cmd: 'stratis fs create stratispool stratisfs; stratis fs'
+      register: fs
+
+    - name: debugging fs
+      debug:
+        var: fs
+
+    - name: store the Stratis UUID into a register
+      command:
+        cmd: 'lsblk --output=UUID /dev/stratis/stratispool/stratisfs'
+      register: uuid
+
+    - name: mount the Stratis pool
+      mount:
+        state: mounted
+        src: 'UUID={{ uuid.stdout_lines.1 }}'
+        path: /mnt/stratis
+        fstype: xfs
+        opts: 'x-systemd.requires=stratisd.service'
