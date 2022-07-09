@@ -1,0 +1,41 @@
+---
+- name: remove the changes made by stratis.yml
+  hosts: all
+  tasks:
+    - name: store uuid in a register
+      command:
+        cmd: 'lsblk --output=UUID /dev/stratis/stratispool/stratisfs'
+      register: uuid
+
+    - name: unmount the Stratis pool
+      mount:
+        state: absent
+        src: 'UUID={{ uuid.stdout_lines.1 }}'
+        path: /mnt/stratis
+        fstype: xfs
+        opts: 'x-systemd.requires=stratisd.service'
+
+    - name: Stratis FS gets completely destroyed
+      command:
+        cmd: 'stratis fs destroy stratispool stratisfs'
+
+    - name: Stratis Pool totally destroyed
+      command:
+        cmd: 'stratis pool destroy stratispool'
+
+    - name: wipe away any trace of Stratis
+      command:
+        cmd: 'wipefs --all /dev/vdb'
+
+    - name: stop the Stratis service
+      service:
+        state: stopped
+        enabled: false
+        name: stratisd
+
+    - name: remove the Stratis packages
+      dnf:
+        state: absent
+        name:
+          - stratisd
+          - stratis-cli

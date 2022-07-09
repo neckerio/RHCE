@@ -1,5 +1,5 @@
-# Stratis
 
+# Stratis
 ## Objective Extra
 * Review Stratis
 
@@ -60,7 +60,7 @@
 	- mount /stratis/mypool/my-fs-snapshot /mnt (to mount)
 * stratis filesystem destroy mypool mysnapshot (delete snap)
 * stratis filesystem destroy mypool myfs (destroy filesystem)
-* stratis pool destroy mypool (destroy pool when no more fs exist)
+* stratis pool destroy mypool (destroy pool after the FS has been destroyed)
 
 
 #### create a stratis system
