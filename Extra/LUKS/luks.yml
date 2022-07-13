@@ -1,0 +1,27 @@
+---
+- name: review LUKS, localhost
+  hosts: localhost
+  tasks:
+    - name: download the correct ansible collection
+      command:
+        cmd: 'ansible-galaxy collection install community.crypto'
+
+- name: review LUKS, remote nodes
+  hosts: all
+  tasks:
+    - name: parted module
+      parted:
+        state: present
+        device: /dev/vdb
+        label: gpt
+        number: 1
+        name: one
+        part_end: 100%
+
+    - name: luks
+      luks_device:
+        device: /dev/vdb1
+        state: present
+        passphrase: "vagrant"
+
+
