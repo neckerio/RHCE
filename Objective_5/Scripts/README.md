@@ -25,6 +25,8 @@
 * sort 
 * cut
 * tr
+* whiptail
+* wc
 
 ### Useful Directories/Files
 

@@ -23,5 +23,17 @@
         device: /dev/vdb1
         state: present
         passphrase: "vagrant"
+        name: vagrantluks
 
+    - name: filesystem
+      filesystem:
+        fstype: ext4
+        state: present
+        dev: /dev/mapper/vagrantluks
 
+    - name: mount
+      mount:
+        state: mounted
+        src: /dev/mapper/vagrantluks
+        path: /mnt/vagrantluks
+        fstype: ext4
