@@ -98,7 +98,7 @@
 
     - name: running necessary command for sefcontext
       command:
-        cmd: "restorecon -v -R /samba(/.*)?"
+        cmd: "restorecon -v -R /samba"
 
     - name: set a possibly relevant seboolean
       seboolean:

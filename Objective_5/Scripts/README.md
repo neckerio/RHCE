@@ -27,6 +27,7 @@
 * tr
 * whiptail
 * wc
+* 
 
 ### Useful Directories/Files
 
